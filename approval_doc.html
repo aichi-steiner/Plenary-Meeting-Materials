@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>授業料集金方法の変更について | 愛知シュタイナー学園</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Hiragino Mincho ProN','Yu Mincho','Georgia',serif;
+  font-size:14px;color:#2c2416;
+  background:#faf8f4;
+  padding:32px 16px 48px;
+}
+.wrap{max-width:860px;margin:0 auto}
+
+.header{text-align:center;padding:32px 0 28px;border-bottom:2px solid #c8b89a;margin-bottom:32px}
+.header .date{font-size:12px;color:#8a7a5a;margin-bottom:8px;font-family:'Hiragino Kaku Gothic ProN',sans-serif;letter-spacing:.08em}
+.header h1{font-size:22px;font-weight:400;letter-spacing:.12em;line-height:1.6;color:#2c2416;margin-bottom:8px}
+.header .org{font-size:12px;color:#8a7a5a;font-family:'Hiragino Kaku Gothic ProN',sans-serif;letter-spacing:.06em}
+
+.sec{font-size:13px;font-weight:500;color:#6b5a3e;font-family:'Hiragino Kaku Gothic ProN',sans-serif;
+  letter-spacing:.08em;border-left:3px solid #c8b89a;padding-left:10px;margin:28px 0 12px}
+
+.lead{font-size:13px;line-height:1.9;color:#3a3020;margin-bottom:20px;padding:16px 18px;
+  background:#fff;border:0.5px solid #ddd0b8;border-radius:6px}
+.lead strong{color:#6b5a3e;font-weight:500}
+
+/* 課題 */
+.issues{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+@media(max-width:580px){.issues{grid-template-columns:1fr}}
+.issue-card{background:#fff;border:0.5px solid #ddd0b8;border-radius:8px;padding:12px 14px}
+.issue-icon{font-size:20px;margin-bottom:6px}
+.issue-title{font-size:11px;font-weight:500;color:#6b5a3e;font-family:'Hiragino Kaku Gothic ProN',sans-serif;margin-bottom:4px}
+.issue-desc{font-size:11px;color:#5a4e3c;line-height:1.6}
+
+.premise{background:#f5f0e8;border:0.5px solid #c8b89a;border-radius:6px;padding:14px 18px;margin-bottom:24px;font-size:12.5px;line-height:1.8;color:#3a3020}
+.premise strong{color:#5a3e1e;font-weight:500}
+
+/* 承認ボックス */
+.approval-box{background:#f0f6f0;border:2px solid #7a9e7e;border-radius:8px;padding:16px 18px;margin-bottom:28px}
+.approval-title{font-size:13px;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;color:#3a5e3a;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.approval-items{display:flex;flex-direction:column;gap:8px}
+.approval-item{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;line-height:1.7;color:#2c3c2c}
+.approval-num{width:22px;height:22px;border-radius:50%;background:#7a9e7e;color:#fff;font-size:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+  font-family:'Hiragino Kaku Gothic ProN',sans-serif;font-weight:500}
+
+/* 費用負担の共通ボックス */
+.cost-common{background:#fef8ee;border:1px solid #e8c870;border-radius:6px;padding:12px 16px;margin-bottom:20px;font-size:12.5px;line-height:1.8;color:#3a3020}
+.cost-common strong{color:#7a5a0a;font-weight:500}
+
+/* 比較カード */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
+.plan-card{background:#fff;border:1px solid #ddd0b8;border-radius:10px;overflow:hidden}
+.plan-card.recommend{border:2px solid #7a9e7e}
+.plan-head{padding:12px 14px 10px}
+.plan-head.rec-head{background:#f0f6f0}
+.plan-badge{display:inline-block;font-size:10px;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;
+  padding:2px 8px;border-radius:4px;margin-bottom:6px;letter-spacing:.04em}
+.badge-a{background:#e8f0e8;color:#3a5e3a}
+.badge-b{background:#7a9e7e;color:#fff}
+.badge-c{background:#f5f0e0;color:#6b5a1e}
+.plan-name{font-size:14px;font-weight:400;letter-spacing:.08em;color:#2c2416;margin-bottom:3px}
+.plan-sub{font-size:10.5px;color:#8a7a5a;font-family:'Hiragino Kaku Gothic ProN',sans-serif}
+
+.plan-cost{padding:10px 14px;background:#faf8f4;border-top:0.5px solid #ddd0b8;border-bottom:0.5px solid #ddd0b8}
+.plan-cost.rec-cost{background:#f0f6f0}
+.cost-label{font-size:10px;color:#8a7a5a;font-family:'Hiragino Kaku Gothic ProN',sans-serif;margin-bottom:3px}
+.cost-main{font-size:15px;font-weight:500;color:#2c2416}
+.cost-note{font-size:10px;color:#8a7a5a;margin-top:2px;font-family:'Hiragino Kaku Gothic ProN',sans-serif;line-height:1.5}
+
+.plan-body{padding:10px 14px 12px}
+.item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:0.5px solid #ede8de;font-size:11.5px}
+.item:last-child{border-bottom:none}
+.item-lbl{color:#8a7a5a;flex-shrink:0;width:72px;font-family:'Hiragino Kaku Gothic ProN',sans-serif;padding-top:1px;font-size:11px}
+.item-val{color:#2c2416;line-height:1.5;flex:1;text-align:right}
+.item-val .note{font-size:10px;color:#8a7a5a;display:block}
+
+.good{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;background:#e8f0e8;color:#2a5a2a;font-family:'Hiragino Kaku Gothic ProN',sans-serif}
+.warn{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;background:#fef0d8;color:#7a4a0a;font-family:'Hiragino Kaku Gothic ProN',sans-serif}
+.neutral{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;background:#f0eee8;color:#5a4e3c;font-family:'Hiragino Kaku Gothic ProN',sans-serif}
+
+/* 保護者目線 */
+.parent-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:640px){.parent-grid{grid-template-columns:1fr}}
+.parent-card{background:#fff;border:1px solid #ddd0b8;border-radius:8px;overflow:hidden}
+.parent-card.recommend{border:2px solid #7a9e7e}
+.parent-head{padding:8px 12px;font-size:11px;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;color:#fff;letter-spacing:.04em}
+.head-a{background:#5a7a5a}
+.head-b{background:#3a6a5a}
+.head-c{background:#7a8a3a}
+.parent-body{padding:10px 12px}
+.p-item{padding:5px 0;border-bottom:0.5px solid #ede8de;font-size:11.5px;line-height:1.6;color:#3a3020}
+.p-item:last-child{border-bottom:none}
+.p-item .lbl{font-size:10px;color:#8a7a5a;font-family:'Hiragino Kaku Gothic ProN',sans-serif;display:block;margin-bottom:1px}
+
+/* 費用比較表 */
+.cost-table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:12px}
+.cost-table th{background:#f0ebe0;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;
+  padding:7px 12px;border:0.5px solid #ddd0b8;color:#5a4e3c;text-align:left;font-size:11px}
+.cost-table th.rec-col{background:#daeeda}
+.cost-table td{padding:7px 12px;border:0.5px solid #ddd0b8;color:#2c2416;vertical-align:top;line-height:1.6}
+.cost-table td.rec-col{background:#f5fbf5}
+.cost-table tr:nth-child(even) td{background:#fdf9f4}
+.cost-table tr:nth-child(even) td.rec-col{background:#eef7ee}
+.cost-table .sub{font-size:10px;color:#8a7a5a;display:block}
+
+/* 事務局の意見 */
+.opinion{background:#f0ebe0;border:0.5px solid #c8b89a;border-radius:8px;padding:16px 18px;margin-bottom:24px}
+.opinion-title{font-size:12px;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;color:#5a3e1e;margin-bottom:8px}
+.opinion-body{font-size:12.5px;line-height:1.9;color:#3a3020}
+
+/* 質問ボックス */
+.question{background:#fff;border:2px solid #7a9e7e;border-radius:8px;padding:14px 18px;margin-bottom:16px}
+.question-title{font-size:12px;font-weight:500;font-family:'Hiragino Kaku Gothic ProN',sans-serif;color:#3a5e3a;margin-bottom:10px}
+.q-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:0.5px solid #ede8de;font-size:12.5px;line-height:1.7;color:#3a3020}
+.q-item:last-child{border-bottom:none}
+.q-num{width:20px;height:20px;border-radius:50%;background:#7a9e7e;color:#fff;font-size:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+  font-family:'Hiragino Kaku Gothic ProN',sans-serif;font-weight:500}
+
+.footer{text-align:center;font-size:11px;color:#8a7a5a;font-family:'Hiragino Kaku Gothic ProN',sans-serif;
+  padding-top:24px;border-top:0.5px solid #ddd0b8;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="date">2026年5月　全体会資料</div>
+  <h1>授業料集金方法の変更について<br>ご承認のお願い</h1>
+  <div class="org">認定特定非営利活動法人　愛知シュタイナー学園　財務管理チーム・会計事務チーム・IT WG</div>
+</div>
+
+<!-- 現状と課題 -->
+<div class="sec">これまでの経緯</div>
+<div class="lead">
+  授業料を口座振替（集金代行サービス）で集金することは全体会でご承認いただき、その後、アンケートで保護者の皆さまからいただいたご意見を参考に、財務管理チーム（岩下父・平川父・中森父）にて各社と打ち合わせや見積比較を行い、<strong>リコーリース株式会社</strong>に決定いたしました。<br>
+  今回は、リコーリースのサービスの中でどの方式を選択するかについて、皆さまのご意見をお聞きし、<strong>承認いただきたいと考えています</strong>。
+</div>
+
+<!-- 3社比較・選定経緯 -->
+<div class="sec">サービス選定の経緯</div>
+<div class="issues">
+  <div class="issue-card" style="border-left:3px solid #7a9e7e">
+    <div class="issue-icon">✅</div>
+    <div class="issue-title" style="color:#3a5e3a">リコーリース（選定）</div>
+    <div class="issue-desc">全国の学校・NPO法人500校以上の実績。縛りなし・違約金なし。月額コストが比較的抑えられる。</div>
+  </div>
+  <div class="issue-card" style="border-left:3px solid #c8b89a;opacity:.85">
+    <div class="issue-icon">🏦</div>
+    <div class="issue-title">豊田信用金庫（見送り）</div>
+    <div class="issue-desc">直接口座振替サービスのみの取り扱いのため、全保護者に<strong>とよしん口座の新規開設が必要</strong>となり、保護者負担が大きいと判断。</div>
+  </div>
+  <div class="issue-card" style="border-left:3px solid #c8b89a;opacity:.85">
+    <div class="issue-icon">💻</div>
+    <div class="issue-title">サブスクペイ（見送り）</div>
+    <div class="issue-desc">月額費用がリコーリースと比較して<strong>高額</strong>（紙の口座振替依頼書で月約1,700円の差、Web登録方式を採用すると更に+10,000円/月）で、かつ<strong>2年間は契約解除不可</strong>（途中解約は残月分の費用が発生）のため見送り。</div>
+  </div>
+</div>
+
+<!-- 提案の前提 -->
+<div class="premise">
+  <strong>リコーリースについて：</strong>口座振替の収納代行会社で、全国の学校・NPO法人500校以上での導入実績があります。縛りなし・違約金なしで柔軟に利用できます。<br>
+  <strong>振替日は事務管理の都合上、A案・B案・折衷案いずれも毎月27日の1択とします。</strong>
+</div>
+
+<!-- 費用負担の共通事項 -->
+<div class="sec">費用負担について（全案共通）</div>
+<div class="cost-common">
+  <strong>口座振替にかかる諸経費（振替手数料・口座登録手数料等）は保護者の皆さまにご負担いただく予定です。</strong><br>
+  具体的には、今後の<strong>参加費の値上げに組み込む形</strong>で対応することを検討しています。<br>
+  値上げの金額・時期については、改めてご説明いたします。
+</div>
+
+<!-- 全体会で承認いただきたいこと -->
+<div class="sec">全体会でご承認いただきたいこと</div>
+<div class="approval-box">
+  <div class="approval-title">✅ 承認事項</div>
+  <div class="approval-items">
+    <div class="approval-item">
+      <div class="approval-num">1</div>
+      <div>口座振替の集金方式として、<strong>B案（Web登録方式）で進めること</strong><br>
+      <span style="font-size:11.5px;color:#4a5e4a">リコーリース「スマホで口座登録プラン」を利用し、保護者がスマホ・PCから口座登録を完結できる方式</span></div>
+    </div>
+    <div class="approval-item">
+      <div class="approval-num">2</div>
+      <div>口座振替にかかる諸経費（振替手数料・口座登録手数料等）を<strong>今後の参加費値上げに組み込むこと</strong><br>
+      <span style="font-size:11.5px;color:#4a5e4a">値上げ金額・時期については別途ご説明いたします</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3案の比較 -->
+<div class="sec">3つの案の比較</div>
+<div class="compare-grid">
+
+  <!-- A案 -->
+  <div class="plan-card">
+    <div class="plan-head">
+      <div class="plan-badge badge-a">A案</div>
+      <div class="plan-name">紙の依頼書方式</div>
+      <div class="plan-sub">口座振替（紙の口座振替依頼書）</div>
+    </div>
+    <div class="plan-cost">
+      <div class="cost-label">学園の月額費用（税込概算）</div>
+      <div class="cost-main">約9,790円/月</div>
+      <div class="cost-note">月額基本料3,300円＋請求手数料99円（税込）×60件＋振込550円</div>
+    </div>
+    <div class="plan-body">
+      <div class="item"><span class="item-lbl">振替日</span><span class="item-val">毎月27日</span></div>
+      <div class="item"><span class="item-lbl">振替開始</span><span class="item-val">申込から約3ヶ月</span></div>
+      <div class="item"><span class="item-lbl">口座登録</span><span class="item-val"><span class="warn">紙に記入・捺印して提出</span></span></div>
+      <div class="item"><span class="item-lbl">口座変更</span><span class="item-val"><span class="warn">再度紙で手続きが必要</span></span></div>
+      <div class="item"><span class="item-lbl">書類管理</span><span class="item-val"><span class="warn">紙で保管・管理が必要</span></span></div>
+      <div class="item"><span class="item-lbl">事務負担</span><span class="item-val"><span class="warn">高い</span></span></div>
+      <div class="item"><span class="item-lbl">将来性</span><span class="item-val"><span class="neutral">△　属人化が残る</span></span></div>
+    </div>
+    <div style="background:#fff8f0;border-top:1px solid #f0d8b0;padding:9px 14px">
+      <div style="font-size:10px;font-weight:500;color:#7a4a0a;font-family:'Hiragino Kaku Gothic ProN',sans-serif;margin-bottom:5px">⚠️ チームがA案を見送りたい理由</div>
+      <div style="font-size:11px;color:#5a3a0a;line-height:1.7">・依頼書の配布・回収・不備対応など<strong>事務手間が大きく</strong>、担当者の負担が継続する<br>・担当者が変わるたびに引き継ぎが難しくなる<br>・紙の保管・管理コストが毎年発生する</div>
+    </div>
+  </div>
+
+  <!-- B案（推奨） -->
+  <div class="plan-card recommend">
+    <div class="plan-head rec-head">
+      <div class="plan-badge badge-b">B案　推奨</div>
+      <div class="plan-name">Web登録方式</div>
+      <div class="plan-sub">口座振替＋ネット口座振替受付オプション</div>
+    </div>
+    <div class="plan-cost rec-cost">
+      <div class="cost-label">学園の月額費用（税込概算）</div>
+      <div class="cost-main">約11,440円/月</div>
+      <div class="cost-note">A案の費用＋Web月額1,650円<br>初月のみ＋登録手数料550円（税込）×60件＝33,000円</div>
+    </div>
+    <div class="plan-body">
+      <div class="item"><span class="item-lbl">振替日</span><span class="item-val">毎月27日</span></div>
+      <div class="item"><span class="item-lbl">振替開始</span><span class="item-val">申込から約3ヶ月</span></div>
+      <div class="item"><span class="item-lbl">口座登録</span><span class="item-val"><span class="good">スマホ・PCで完結</span></span></div>
+      <div class="item"><span class="item-lbl">口座変更</span><span class="item-val"><span class="good">スマホからいつでも対応</span></span></div>
+      <div class="item"><span class="item-lbl">書類管理</span><span class="item-val"><span class="good">電子的に管理・紙不要</span></span></div>
+      <div class="item"><span class="item-lbl">事務負担</span><span class="item-val"><span class="good">非常に低い</span></span></div>
+      <div class="item"><span class="item-lbl">将来性</span><span class="item-val"><span class="good">◎　属人化が解消</span></span></div>
+    </div>
+  </div>
+
+  <!-- 折衷案 -->
+  <div class="plan-card">
+    <div class="plan-head">
+      <div class="plan-badge badge-c">折衷案</div>
+      <div class="plan-name">段階的移行方式</div>
+      <div class="plan-sub">初年度はA案、翌年度からB案に移行</div>
+    </div>
+    <div class="plan-cost">
+      <div class="cost-label">学園の月額費用（税込概算）</div>
+      <div class="cost-main">初年度：約9,790円<br>翌年度〜：約11,440円</div>
+      <div class="cost-note">移行時に新入・変更家庭分の登録手数料が発生</div>
+    </div>
+    <div class="plan-body">
+      <div class="item"><span class="item-lbl">振替日</span><span class="item-val">毎月27日（全期間）</span></div>
+      <div class="item"><span class="item-lbl">振替開始</span><span class="item-val"><span class="good">すぐに開始できる</span></span></div>
+      <div class="item"><span class="item-lbl">口座登録</span><span class="item-val">初年度は紙<br><span class="note">翌年度からスマホで完結</span></span></div>
+      <div class="item"><span class="item-lbl">口座変更</span><span class="item-val">初年度は紙<br><span class="note">翌年度からスマホ対応</span></span></div>
+      <div class="item"><span class="item-lbl">書類管理</span><span class="item-val">初年度は紙あり<br><span class="note">翌年度から電子管理</span></span></div>
+      <div class="item"><span class="item-lbl">事務負担</span><span class="item-val">初年度のみ高い</span></div>
+      <div class="item"><span class="item-lbl">将来性</span><span class="item-val"><span class="good">◎　B案と同じ最終形</span></span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 保護者目線の変化 -->
+<div class="sec">保護者の皆さまにとっての変化（案ごと）</div>
+<div class="parent-grid">
+
+  <div class="parent-card">
+    <div class="parent-head head-a">A案　紙の依頼書方式</div>
+    <div class="parent-body">
+      <div class="p-item"><span class="lbl">口座登録</span>紙の依頼書に記入・捺印して学園に提出</div>
+      <div class="p-item"><span class="lbl">毎月の手続き</span>なし（27日に自動引き落とし）</div>
+      <div class="p-item"><span class="lbl">口座変更の場合</span>再度紙の依頼書を記入して提出</div>
+      <div class="p-item"><span class="lbl">引き落とし日</span>毎月27日</div>
+      <div class="p-item"><span class="lbl">諸経費（参加費に含む）</span>振替手数料 99円（税込）/月<br>口座振替用紙 15円/枚（初回・変更時）</div>
+    </div>
+  </div>
+
+  <div class="parent-card recommend">
+    <div class="parent-head head-b">B案　Web登録方式（推奨）</div>
+    <div class="parent-body">
+      <div class="p-item"><span class="lbl">口座登録</span><strong>スマホ・PCで数分で完結</strong><br>学園から届くURLにアクセスして入力するだけ</div>
+      <div class="p-item"><span class="lbl">毎月の手続き</span>なし（27日に自動引き落とし）</div>
+      <div class="p-item"><span class="lbl">口座変更の場合</span>スマホから再登録するだけ（紙不要）</div>
+      <div class="p-item"><span class="lbl">引き落とし日</span>毎月27日</div>
+      <div class="p-item"><span class="lbl">諸経費（参加費に含む）</span>振替手数料 99円（税込）/月<br>口座登録手数料 550円（税込）/回（初回・変更時）</div>
+    </div>
+  </div>
+
+  <div class="parent-card">
+    <div class="parent-head head-c">折衷案　段階的移行方式</div>
+    <div class="parent-body">
+      <div class="p-item"><span class="lbl">初年度の口座登録</span>紙の依頼書で登録（A案と同じ）</div>
+      <div class="p-item"><span class="lbl">翌年度からの方式</span>スマホから再登録してWeb方式に移行</div>
+      <div class="p-item"><span class="lbl">毎月の手続き</span>なし（27日に自動引き落とし）</div>
+      <div class="p-item"><span class="lbl">引き落とし日</span>毎月27日（全期間共通）</div>
+      <div class="p-item"><span class="lbl">諸経費（参加費に含む）</span>振替手数料 99円（税込）/月（全期間）<br>口座登録手数料：初年度なし<br>翌年度〜：新入・変更時のみ550円（税込）/回</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 費用比較表 -->
+<div class="sec">保護者1家庭あたりの費用負担比較（税込・参加費への上乗せ予定）</div>
+<table class="cost-table">
+  <tr>
+    <th>費用項目</th>
+    <th>現在（銀行振込）</th>
+    <th>A案（紙）</th>
+    <th class="rec-col">B案（Web）推奨</th>
+    <th>折衷案</th>
+  </tr>
+  <tr>
+    <td>毎月の振込手数料</td>
+    <td>110〜330円/月<span class="sub">銀行・方法による</span></td>
+    <td><strong>なし</strong><span class="sub">自動引き落としのため不要</span></td>
+    <td class="rec-col"><strong>なし</strong><span class="sub">自動引き落としのため不要</span></td>
+    <td><strong>なし</strong><span class="sub">自動引き落としのため不要</span></td>
+  </tr>
+  <tr>
+    <td>口座振替手数料</td>
+    <td>なし</td>
+    <td>99円（税込）/月<span class="sub">参加費に上乗せ予定</span></td>
+    <td class="rec-col">99円（税込）/月<span class="sub">参加費に上乗せ予定</span></td>
+    <td>99円（税込）/月<span class="sub">参加費に上乗せ予定</span></td>
+  </tr>
+  <tr>
+    <td>口座振替用紙</td>
+    <td>なし</td>
+    <td>15円/枚<span class="sub">初回・変更時<br>参加費に上乗せ予定</span></td>
+    <td class="rec-col"><strong>なし</strong><span class="sub">Web登録のため不要</span></td>
+    <td>初年度：15円/枚<span class="sub">翌年度〜：なし</span></td>
+  </tr>
+  <tr>
+    <td>口座登録手数料</td>
+    <td>なし</td>
+    <td><strong>なし</strong></td>
+    <td class="rec-col">550円（税込）/回<span class="sub">初回・変更時<br>参加費に上乗せ予定</span></td>
+    <td>初年度：<strong>なし</strong><span class="sub">翌年度〜：550円（税込）/回<br>新入・変更時のみ</span></td>
+  </tr>
+  <tr>
+    <td>毎月の振込手続き</td>
+    <td>毎月必要</td>
+    <td><strong>不要</strong></td>
+    <td class="rec-col"><strong>不要</strong></td>
+    <td><strong>不要</strong></td>
+  </tr>
+  <tr>
+    <td>口座登録の手間</td>
+    <td>なし（都度振込）</td>
+    <td>初回のみ<span class="sub">紙に記入・捺印・提出</span></td>
+    <td class="rec-col">初回のみ<span class="sub">スマホでURLにアクセスして入力</span></td>
+    <td>初年度：紙で手続き<span class="sub">翌年度：スマホで再登録（1回のみ）</span></td>
+  </tr>
+</table>
+
+<!-- チームからの説明 -->
+<div class="sec">チームからのご説明</div>
+<div class="opinion">
+  <div class="opinion-title">📝 チームの考え方</div>
+  <div class="opinion-body">
+    いずれの案でも、保護者の皆さまの<strong>毎月の振込手続きがなくなり</strong>、毎月27日に自動引き落としとなります。現在の振込手数料（110〜330円/月）もなくなります。<br><br>
+    A案（紙の依頼書方式）は導入コストを抑えられますが、<strong>依頼書の配布・回収・不備対応など事務手間が大きく</strong>、担当者への負担が継続するため、見送りたいと考えています。<br><br>
+    財務管理チームとしては、<strong>長期的な運営の安定・担当者が変わっても引き継ぎやすい体制</strong>を整えることが学園にとって重要だと考えており、<strong>B案（Web登録方式）での導入</strong>をお願いしたいと考えています。<br><br>
+    特に以下の点からB案を推奨します。<br>
+    ・初回60家庭分の口座登録対応は、どの案でも事務的な負荷が最も大きいタイミングです。<strong>最初からWebで対応すれば、その負荷を大幅に軽減できます。</strong><br>
+    ・A案との月額差は<strong>約1,650円</strong>（税込）ですが、初期登録費用（33,000円）は長く使えば使うほど1ヶ月あたりの負担は薄まっていきます。継続利用を前提にすれば、コスト面でも十分に見合うと考えています。<br>
+    ・また、<strong>基本料金（月額3,300円（税込））は導入後6ヶ月間無償のキャンペーンが適用</strong>されるため、初年度の実質コストはさらに抑えられます。<br><br>
+    すぐにB案の導入が難しい場合は、<strong>折衷案（初年度は紙、翌年度からWebへ移行）</strong>も選択肢として提示しています。どちらの案でも最終的にはWebによる効率的な運営が実現できます。<br><br>
+    口座振替にかかる諸経費については、<strong>参加費の値上げに組み込む形</strong>でご負担いただく予定です。
+  </div>
+</div>
+
+<!-- 承認いただきたいこと（再掲） -->
+<div class="sec">全体会でご承認いただきたいこと</div>
+<div class="question">
+  <div class="question-title">✅ ご承認・ご意見をお聞かせください</div>
+  <div class="q-item"><div class="q-num">1</div><div><strong>B案（Web登録方式）で進めること</strong>についてご承認いただけますか？<br><span style="font-size:11.5px;color:#5a5a5a">※すぐの導入が難しい場合は折衷案（初年度は紙、翌年度からWeb）もご検討ください</span></div></div>
+  <div class="q-item"><div class="q-num">2</div><div>口座振替にかかる諸経費を<strong>今後の参加費値上げに組み込むこと</strong>についてご承認いただけますか？</div></div>
+  <div class="q-item"><div class="q-num">3</div>スマホでの口座登録（B案・折衷案）について、操作に不安のある方はいらっしゃいますか？</div>
+  <div class="q-item"><div class="q-num">4</div>その他、ご不明な点・ご意見があればお聞かせください。</div>
+</div>
+
+
+</div>
+</body>
+</html>
