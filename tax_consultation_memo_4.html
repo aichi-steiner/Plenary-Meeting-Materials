@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>税理士相談用メモ｜愛知シュタイナー学園</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1c1c1a;
+    --ink-light: #4a4a46;
+    --ink-faint: #7a7a74;
+    --paper: #faf8f4;
+    --paper-warm: #f2efe8;
+    --paper-mid: #e8e4da;
+    --accent: #2c5f8a;
+    --accent-light: #e8f0f7;
+    --accent-mid: #b8d0e8;
+    --gold: #8a6c2c;
+    --gold-light: #f5f0e8;
+    --green: #3a6b3a;
+    --green-light: #eaf2ea;
+    --warn: #8a3a2c;
+    --warn-light: #f7ecea;
+    --border: #d4cfc4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.8;
+    padding: 3rem 1.5rem;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .doc-header {
+    border-top: 3px solid var(--accent);
+    padding-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .doc-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .doc-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-org {
+    font-size: 15px;
+    color: var(--ink-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .doc-date {
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* Info table */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .info-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+
+  .info-table tr:last-child td { border-bottom: none; }
+
+  .info-table .label {
+    width: 28%;
+    color: var(--ink-light);
+    font-weight: 500;
+    background: var(--paper-warm);
+    white-space: nowrap;
+  }
+
+  .info-table .value { color: var(--ink); }
+
+  .info-table .value.highlight {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Body text */
+  p {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Notice box */
+  .notice {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .notice-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .notice p {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin: 0;
+  }
+
+  /* Lists */
+  ul.dot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+
+  ul.dot-list li {
+    font-size: 14px;
+    color: var(--ink-light);
+    padding: 4px 0 4px 1.25rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  ul.dot-list li::before {
+    content: "・";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  ol.num-list {
+    list-style: none;
+    counter-reset: num;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+
+  ol.num-list li {
+    counter-increment: num;
+    font-size: 14px;
+    color: var(--ink-light);
+    padding: 4px 0 4px 1.75rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  ol.num-list li::before {
+    content: counter(num) ".";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* Sub label */
+  .sub-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 1rem 0 0.4rem;
+  }
+
+  /* Views A/B */
+  .view-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .view-grid { grid-template-columns: 1fr; }
+  }
+
+  .view-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+  }
+
+  .view-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .view-card p {
+    font-size: 13px;
+    margin: 0;
+  }
+
+  /* Q items */
+  .q-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .q-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .q-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .q-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .q-body {
+    padding: 0.9rem 1.1rem;
+    background: #fff;
+  }
+
+  .q-body p {
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+    color: var(--ink-light);
+  }
+
+  .q-body p:last-child { margin-bottom: 0; }
+
+  .q-body ul.dot-list li {
+    font-size: 13px;
+  }
+
+  /* Tag */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .tag-important {
+    background: var(--warn-light);
+    color: var(--warn);
+  }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="doc-label">Tax Consultation Memo</div>
+    <div class="doc-title">税理士相談用メモ</div>
+    <div class="doc-org">特定非営利活動法人 愛知シュタイナー学園</div>
+    <div class="doc-date">作成日：2026年5月</div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">法人の基本情報</span>
+    </div>
+    <table class="info-table">
+      <tr><td class="label">法人名</td><td class="value">特定非営利活動法人 愛知シュタイナー学園</td></tr>
+      <tr><td class="label">法人種別</td><td class="value highlight">認定NPO法人</td></tr>
+      <tr><td class="label">所在地</td><td class="value">愛知県日進市折戸町笠寺山42-13</td></tr>
+      <tr><td class="label">所轄庁</td><td class="value">愛知県</td></tr>
+      <tr><td class="label">事業年度</td><td class="value">毎年4月1日〜翌年3月31日</td></tr>
+      <tr><td class="label">目的</td><td class="value">ルドルフ・シュタイナーの教育理念に基づく学びの場の提供および諸事業による子どもたちの健全育成への寄与</td></tr>
+    </table>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">現在の事業内容（定款第５条）</span>
+    </div>
+    <p>現行定款では以下の<strong>特定非営利活動に係る事業のみ</strong>が記載されており、収益事業の記載はありません。</p>
+    <ol class="num-list">
+      <li>シュタイナー教育を実践する愛知シュタイナー学園（学習塾）の運営</li>
+      <li>シュタイナー教育の研究及び普及活動</li>
+      <li>シュタイナー教育に基づく教員養成事業およびその支援</li>
+      <li>その他、この法人の目的を達成するために必要な事業</li>
+    </ol>
+    <p style="margin-top:0.75rem;">会計区分（定款第43条）は現在<strong>特定非営利活動に係る事業の会計１種のみ</strong>です。</p>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">現在の収入構造</span>
+    </div>
+    <p>主な収入は以下の通りです。</p>
+    <ul class="dot-list">
+      <li>会費収入（正会員・賛助会員）</li>
+      <li>参加費等の事業収入</li>
+      <li>寄附金収入</li>
+      <li>補助金・助成金収入</li>
+      <li>学童費（後述）</li>
+    </ul>
+    <div class="notice" style="margin-top:1rem;">
+      <div class="notice-title">【学童保育について】</div>
+      <p>当学園の敷地内で、在校生を対象とした学童保育を実施しています。学童費は通常の参加費とは別に、学童保育の対象学年である１〜６年生の子どもが在籍する家庭のみが負担しており（７年生以上の子どものみが在籍する家庭は負担なし）、学童員の人件費および学童運営に関わる経費に充てています。現時点では収支は学園全体の会計の中で処理していますが、学童関連収支の取り扱いについて整理が必要と認識しています（詳細は相談事項⑧を参照）。</p>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">今回の検討経緯</span>
+    </div>
+    <p>学園の財政基盤強化および社会へのシュタイナー教育の発信を目的として、オンラインショップの開設を検討しています。</p>
+    <div class="sub-label">販売を想定している品目</div>
+    <ul class="dot-list">
+      <li>手仕事品（保護者・生徒による制作物）</li>
+      <li>書籍・冊子（学園オリジナルの出版物）</li>
+      <li>オリジナルグッズ（カレンダー・ポストカード等）</li>
+      <li>精油（学園の敷地内で栽培した植物から製造、芳香用雑貨として販売予定）</li>
+      <li>リアル講座の参加費（学園が主催する講演会・ワークショップ等への参加費をオンラインで事前決済）</li>
+      <li>リアル講座の録画動画販売（開催済みの講座を録画し、限定URLまたは動画配信プラットフォームにて販売。購入者のみが視聴できる形式）</li>
+    </ul>
+    <div class="sub-label">販売形態</div>
+    <p>オンラインショップ（Squareを検討中）に加え、説明会や公開行事等での対面販売も想定しています。</p>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">現在の検討状況と論点</span>
+    </div>
+    <p>オンラインショップ開設にあたり、<strong>運営主体および定款変更の要否</strong>について以下の2つの見解があり、どちらが適切かを判断できていない状況です。</p>
+    <div class="view-grid">
+      <div class="view-card">
+        <div class="view-card-title">見解A：定款変更が必要</div>
+        <p>物品販売・講座販売は法人税法上の収益事業（物品販売業・請負業）に該当するため、定款に収益事業の記載を追加した上で所轄庁の認証を受け、収益事業開始届出書を提出する必要があるという考え方。</p>
+      </div>
+      <div class="view-card">
+        <div class="view-card-title">見解B：定款変更は不要<br><span style="font-weight:400;font-size:12px;">（他のシュタイナー系NPO法人の実務担当者の意見）</span></div>
+        <p>NPO法第2条「不特定かつ多数のものの利益の増進に寄与すること」を満たす活動であれば本来事業の範疇に収まり、現行定款第５条４号を根拠として販売活動が可能という考え方。決算時に必要に応じて法人税を支払う対応のみで足りるとのこと。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">父母の会について</span>
+    </div>
+    <p>当学園には、在校生の保護者全員が所属する任意団体「父母の会」があります。オンラインショップの運営主体として、以下の2案を比較検討中です。</p>
+    <ul class="dot-list">
+      <li><strong>案1</strong>：学園（認定NPO法人）が直接運営</li>
+      <li><strong>案2</strong>：父母の会が自主活動として運営し、売上を学園へ寄附</li>
+    </ul>
+    <p style="margin-top:0.75rem;">他のシュタイナー系NPO法人の実務担当者からは、「父母の会による自主活動として販売を行い、学園とは厳格に区別した上で寄附として学園会計に受け入れる」という運営実例の共有がありました。</p>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">ご相談したい事項</span>
+    </div>
+    <p>以下の点についてご教示いただきたく存じます。</p>
+
+    <div class="q-list" style="margin-top:1rem;">
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">①</span>
+          <span class="q-title">定款変更の要否<span class="tag tag-important">最重要</span></span>
+        </div>
+        <div class="q-body">
+          <p>現行定款第５条の範囲内で物品販売・講座販売・リアル講座参加費の収受・録画動画販売を行うことは、法人税法上「収益事業」として課税対象になりますか。それとも本来事業内の収益活動として整理できますか。また、見解Bのように定款変更なしで販売活動を開始した場合、税務上のリスクはありますか。</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">②</span>
+          <span class="q-title">父母の会が販売する場合の会計処理</span>
+        </div>
+        <div class="q-body">
+          <p>父母の会（任意団体）が販売活動を行い学園へ寄附する場合、学園側の受取処理と税務上の扱いはどうなりますか。また父母の会側は「人格なき社団」という扱いになり、法人税申告が必要となりますか？利益規模によっては法人税の納税義務が発生しますか？</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">③</span>
+          <span class="q-title">学童費の会計処理と余剰金の取り扱い</span>
+        </div>
+        <div class="q-body">
+          <p>当学園では在校生を対象とした学童保育を実施しており、通常の参加費とは別に学童保育を利用する１〜６年生の子どもが在籍する家庭のみから学童費を徴収しています（７年生以上の子どものみが在籍する家庭は負担なし）。学童費は学童員の人件費および学童運営経費に充てていますが、以下の点についてご教示ください。</p>
+          <ul class="dot-list">
+            <li>学童関連の収入が支出を上回った場合（余剰が生じた場合）、その余剰分を学園全体のその他の支出に充てることは会計上・税務上問題ないか</li>
+            <li>それとも、余剰分は学童会計として繰り越す必要があるか</li>
+            <li>現在は学園全体の会計の中で一括処理していますが、今後学童関連収支を別会計区分として独立させる必要があるか、またその場合の具体的な処理方法</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">④</span>
+          <span class="q-title">サマースクールを事業化した場合の収益の取り扱い</span>
+        </div>
+        <div class="q-body">
+          <p>当学園では、海外のシュタイナー学校の生徒を日本に招いてサマースクール（バケーションスクール）を開催することを検討しています。参加者から参加費を徴収して事業として運営する場合、以下の点についてご教示ください。</p>
+          <ul class="dot-list">
+            <li>サマースクールの参加費収入は法人税法上「収益事業」として課税対象になりますか。それとも本来事業（社会教育・国際交流）の範疇として整理できますか</li>
+            <li>収益が生じた場合、オンラインショップの収益と合算して収益事業として申告する必要がありますか</li>
+            <li>開催にあたっての経費（講師謝礼・宿泊・食事・交通等）を適切に計上するための会計処理の留意点を教えてください</li>
+            <li>参加者が海外からの外国人である場合、源泉徴収や外国人講師への報酬支払いに関して特別な税務上の手続きは必要ですか</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑤</span>
+          <span class="q-title">他のシュタイナー幼稚園のイベントへの出店販売の取り扱い</span>
+        </div>
+        <div class="q-body">
+          <p>学園が他のシュタイナー幼稚園の法人賛助会員となり、その法人賛助会員特典として、当該幼稚園が開催するオープンデーに出店して手仕事品等を販売した場合、売上の会計処理上の注意点はありますか。</p>
+          <ul class="dot-list">
+            <li>この販売行為は法人税法上の収益事業として課税対象になりますか。それとも本来事業の一環として整理できますか</li>
+            <li>法人賛助会員費の支払いと販売収益の関係について、会計上・税務上整理しておくべき点はありますか</li>
+            <li>他法人の主催するイベントへの出店という形態において、特別に注意すべき点はありますか</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑥</span>
+          <span class="q-title">収益事業開始届出書の要否とタイミング</span>
+        </div>
+        <div class="q-body">
+          <p>販売活動を開始する場合、税務署への収益事業開始届出書の提出は必要ですか。必要な場合、提出のタイミングと手続きを教えてください。</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑦</span>
+          <span class="q-title">みなし寄附金制度の活用</span>
+        </div>
+        <div class="q-body">
+          <p>当学園は認定NPO法人であるため、収益事業の利益を特定非営利活動へ支出した場合にみなし寄附金として損金算入できると理解しています。具体的な活用方法・限度額・事業年度末（3月31日）までの支出完了要件について確認させてください。</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑧</span>
+          <span class="q-title">区分経理の実務</span>
+        </div>
+        <div class="q-body">
+          <p>収益事業と特定非営利活動の会計を弥生会計で区分管理する場合の、具体的な部門設定・仕訳方法・共通費用の按分基準について教えてください。</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑨</span>
+          <span class="q-title">消費税・インボイス対応</span>
+        </div>
+        <div class="q-body">
+          <p>現時点での課税売上高の状況を踏まえ、インボイス登録（適格請求書発行事業者）の要否と、登録しない場合のリスクについて教えてください。</p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">⑩</span>
+          <span class="q-title">認定NPO法人の継続要件（PST）への影響</span>
+        </div>
+        <div class="q-body">
+          <p>収益事業の売上増加がPST（パブリック・サポート・テスト）の計算に与える影響を試算していただけますか。収益事業の規模をどの程度に抑えるべきか、目安を教えてください。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    以上、ご多忙のところ恐れ入りますが、何卒よろしくお願いいたします。
+  </div>
+
+</div>
+</body>
+</html>
