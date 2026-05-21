@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027年度予算について、みんなで考えたいこと</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  background: #f0f7f4;
+  color: #2a2e2b;
+  line-height: 1.8;
+  padding: 40px 20px 80px;
+}
+
+.wrapper { max-width: 760px; margin: 0 auto; }
+
+/* ヘッダー */
+.page-header {
+  background: linear-gradient(135deg, #4a9b6f 0%, #5bb385 100%);
+  border-radius: 16px;
+  padding: 36px 40px;
+  margin-bottom: 32px;
+  color: #fff;
+}
+.page-header .label {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #c8eedb;
+  margin-bottom: 10px;
+}
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.deficit-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
+  padding: 10px 18px;
+}
+.deficit-badge .num {
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff5cc;
+}
+.deficit-badge .unit {
+  font-size: 13px;
+  color: #e8f8ef;
+}
+
+/* intro */
+.intro {
+  background: #ffffff;
+  border: 1px solid #b8dfc8;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  font-size: 15px;
+  color: #3a4a3e;
+}
+.intro p + p { margin-top: 12px; }
+
+/* 収支説明カード */
+.balance-card {
+  background: #e8f5ee;
+  border: 1px solid #b8dfc8;
+  border-radius: 14px;
+  padding: 20px 26px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: #2a4a35;
+}
+
+/* セクションタイトル */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 36px 0 16px;
+}
+.section-header .badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badge-income { background: #b8e8cc; color: #1a5c34; }
+.badge-expense { background: #fce0b0; color: #7a4200; }
+.section-header h2 {
+  font-size: 17px;
+  font-weight: 500;
+  color: #2a3a2e;
+}
+
+/* アイテムカード */
+.item-card {
+  background: #ffffff;
+  border: 1px solid #c8e6d5;
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 14px;
+}
+.item-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.item-num {
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #4a9b6f;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.item-num.expense { background: #d4804a; }
+.item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e2e22;
+  line-height: 1.4;
+}
+.item-title .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  background: #fff3cc;
+  color: #7a5000;
+  border-radius: 4px;
+  padding: 1px 8px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.item-body {
+  font-size: 14px;
+  color: #3a4a3e;
+  line-height: 1.8;
+}
+.item-body p + p { margin-top: 8px; }
+
+/* 数字ハイライト */
+.highlight-box {
+  background: #e4f5ec;
+  border-left: 3px solid #4a9b6f;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: #1a4a2a;
+}
+.highlight-box strong { font-weight: 500; }
+
+/* 注記ボックス */
+.note-box {
+  background: #fdf6e8;
+  border: 1px solid #f0d890;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #5a4a20;
+  line-height: 1.7;
+}
+.note-box .note-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #a08030;
+  margin-bottom: 4px;
+}
+
+/* まとめ表 */
+.summary-section { margin-top: 40px; }
+.summary-section h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: #2a3a2e;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #c8e6d5;
+}
+thead tr { background: #4a9b6f; color: #ffffff; }
+thead th {
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+}
+tbody tr { border-bottom: 1px solid #dff0e8; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr.income-row td:first-child { border-left: 3px solid #4a9b6f; }
+tbody tr.expense-row td:first-child { border-left: 3px solid #d4804a; }
+tbody td { padding: 10px 14px; color: #3a4a3e; vertical-align: top; }
+tbody td.em { font-weight: 500; color: #1e2e22; }
+.amt { color: #b83030; font-weight: 500; }
+
+/* 締め */
+.closing {
+  background: linear-gradient(135deg, #4a9b6f 0%, #5bb385 100%);
+  border-radius: 16px;
+  padding: 30px 36px;
+  margin-top: 36px;
+  color: #e8f8ef;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.closing p + p { margin-top: 12px; }
+.closing .cta {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  border-top: 1px solid rgba(255,255,255,0.25);
+  padding-top: 16px;
+}
+
+footer {
+  text-align: center;
+  font-size: 11px;
+  color: #7aaa8a;
+  margin-top: 40px;
+}
+
+@media (max-width: 520px) {
+  .page-header { padding: 24px 20px; }
+  .page-header h1 { font-size: 18px; }
+  .deficit-badge .num { font-size: 22px; }
+  .item-card { padding: 16px 18px; }
+  .closing { padding: 22px 20px; }
+  table { font-size: 12px; }
+  thead th, tbody td { padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="page-header">
+    <div class="label">2027年度予算 — 全体会資料</div>
+    <h1>2027年度の予算について、<br>みんなで考えたいこと</h1>
+    <div class="deficit-badge">
+      <span class="num">▲ 1,778万円</span>
+      <span class="unit">の赤字が見込まれています</span>
+    </div>
+  </div>
+
+  <div class="intro">
+    <p>これは「誰かが何とかする」問題ではなく、学園に関わるすべての家庭が当事者として向き合う必要がある課題です。</p>
+    <p>この学園は、ここに集まった保護者・教職員・理事みんなの力で成り立っています。財政のことも、ぜひ一緒に考えていただければ嬉しいです。</p>
+  </div>
+
+  <div class="balance-card">
+    赤字解消には<strong>「収入を増やす」</strong>努力と<strong>「支出を見直す」</strong>努力を同時に積み重ねることが必要です。どちらか一方では足りません。
+  </div>
+
+  <!-- 収入セクション -->
+  <div class="section-header">
+    <span class="badge badge-income">収入を増やす</span>
+    <h2>できることから、一つずつ</h2>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num">①</div>
+      <div class="item-title">入学者を増やす・確保する <span class="tag">最重要</span></div>
+    </div>
+    <div class="item-body">
+      <p>2027年度の予算は、新入生<strong>15名</strong>を前提に組まれています。</p>
+      <div class="highlight-box">
+        1名減ると　参加費 <strong>66万円</strong> ＋ 施設拡充金 <strong>25万円</strong> ＝ <strong>91万円の収入減</strong>
+      </div>
+      <p>入学者を確保することは、財政の根幹を守ることに直結します。説明会への集客や学園の認知拡大は、教職員だけの仕事ではありません。卒業園への「縁結び」、口コミ、SNSでの発信など、保護者一人ひとりが広報の担い手です。</p>
+    </div>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num">②</div>
+      <div class="item-title">公開講座・教員養成講座の収入を増やす</div>
+    </div>
+    <div class="item-body">
+      <p>現在の予算は講座事業35万円、教員養成30万円と小さな規模です。認定NPO法人としての信頼を活かし、受講者を増やすことで学外からの収入を育てることができます。学園の教育理念を社会に広める活動でもあります。</p>
+    </div>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num">③</div>
+      <div class="item-title">寄付金を増やす</div>
+    </div>
+    <div class="item-body">
+      <p>愛知シュタイナー学園は<strong>認定NPO法人</strong>です。寄付者は税額控除を受けられるため、実質的な負担を大きく抑えながら応援することができます。</p>
+      <p>在学家庭だけでなく、卒業家庭、地域の支援者、シュタイナー教育に共感する方々への継続的な働きかけが必要です。</p>
+    </div>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num">④</div>
+      <div class="item-title">新事業による収入源の確保</div>
+    </div>
+    <div class="item-body">
+      <p>お金チームを中心に、バケーションスクール（海外シュタイナー校からの生徒受け入れ）やオンラインショップの開設など、収入を増やす方法を皆で考えて動き始めています。</p>
+      <p>今ある学校の資源を活かした新しい事業を育てることで、学費収入だけに依存しない収入の柱をつくることができます。</p>
+    </div>
+  </div>
+
+  <!-- 支出セクション -->
+  <div class="section-header">
+    <span class="badge badge-expense">支出を減らす</span>
+    <h2>賢く使う、丁寧に見直す</h2>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num expense">⑤</div>
+      <div class="item-title">専科教員の人件費を見直す</div>
+    </div>
+    <div class="item-body">
+      <p>支出の中で専科教員謝金は<strong>1,080万円</strong>と大きな割合を占めています。合同クラスでの授業やカリキュラムの見直しによってコマ数を調整し、教育の質を保ちながら費用を適正化できないか、教員会を中心に検討をお願いしたい部分です。</p>
+      <div class="note-box">
+        <div class="note-label">スケジュール上の留意点</div>
+        専科教員との労務面談は例年<strong>10月頃</strong>から始まります。支出削減を実現するためには、<strong>1学期中に「何を・どれだけ削減できるか」を具体的に整理し</strong>、該当する教員と丁寧なすり合わせを行うことが必要です。教育内容に直接関わる話でもあるため、早めの議論が前提になります。
+      </div>
+    </div>
+  </div>
+
+  <div class="item-card">
+    <div class="item-header">
+      <div class="item-num expense">⑥</div>
+      <div class="item-title">その他経費の支出を見直す</div>
+    </div>
+    <div class="item-body">
+      <p>通信費・事務用品費・広報費・研修費など、個々の金額は小さくても、積み上げると無視できない規模になります。「必要なものを削る」のではなく、「より賢く使う」視点で一つひとつを点検します。</p>
+    </div>
+  </div>
+
+  <!-- まとめ表 -->
+  <div class="summary-section">
+    <h2>まとめ</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>アプローチ</th>
+          <th>内容</th>
+          <th>効果のイメージ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="income-row">
+          <td class="em">入学者の確保</td>
+          <td>15名想定を下回らない</td>
+          <td class="amt">1名減で ▲91万円</td>
+        </tr>
+        <tr class="income-row">
+          <td class="em">講座・養成収入</td>
+          <td>学外からの収入を育てる</td>
+          <td>積み上げ次第</td>
+        </tr>
+        <tr class="income-row">
+          <td class="em">寄付金</td>
+          <td>認定NPOの税制優遇を活用</td>
+          <td>積み上げ次第</td>
+        </tr>
+        <tr class="income-row">
+          <td class="em">新事業</td>
+          <td>バケスク・オンラインショップ等</td>
+          <td>積み上げ次第</td>
+        </tr>
+        <tr class="expense-row">
+          <td class="em">専科人件費見直し</td>
+          <td>カリキュラム調整・1学期中に方針整理</td>
+          <td>数十〜百万円規模</td>
+        </tr>
+        <tr class="expense-row">
+          <td class="em">その他経費削減</td>
+          <td>支出の点検・精査</td>
+          <td>積み上げ次第</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="closing">
+    <p>どれか一つで解決する「魔法の答え」はありません。</p>
+    <p>収入の積み上げと支出の見直しを、学園に関わるすべての人が自分ごととして取り組むことで、はじめて道が開けます。</p>
+    <div class="cta">シミュレーターを使いながら、皆さんと一緒に考えましょう。</div>
+  </div>
+
+  <footer>愛知シュタイナー学園 2027年度予算検討資料</footer>
+
+</div>
+</body>
+</html>
