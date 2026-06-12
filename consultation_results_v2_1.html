@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>専門家見解まとめ｜愛知シュタイナー学園</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #f5f3ee;
+    color: #1c1c1a;
+    line-height: 1.8;
+    padding: 2.5rem 1.25rem;
+  }
+
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .doc-header {
+    border-top: 4px solid #2c5f8a;
+    padding-top: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .doc-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c1c1a;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+  }
+
+  .doc-date {
+    font-size: 13px;
+    color: #7a7a74;
+  }
+
+  /* Background box */
+  .bg-box {
+    background: #eef4f9;
+    border-left: 4px solid #2c5f8a;
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    color: #3a3a38;
+    line-height: 1.7;
+  }
+
+  /* Summary box */
+  .summary-box {
+    background: #ffffff;
+    border: 1.5px solid #2c5f8a;
+    border-radius: 12px;
+    padding: 1.25rem 1.25rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .summary-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2c5f8a;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .summary-box ul.dot-list {
+    margin: 0;
+  }
+
+  .summary-box ul.dot-list li {
+    font-size: 14px;
+    color: #3a3a38;
+  }
+
+  /* Section */
+  .section {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #d8d4cc;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: #f0ede6;
+    border-bottom: 1px solid #d8d4cc;
+  }
+
+  .section-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2c5f8a;
+    border-radius: 4px;
+    padding: 2px 10px;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1c1c1a;
+  }
+
+  .section-body {
+    padding: 1.25rem;
+  }
+
+  /* Conclusion box */
+  .conclusion {
+    background: #eaf3ea;
+    border-left: 4px solid #3a6b3a;
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .conclusion-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3a6b3a;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .conclusion p {
+    font-size: 14px;
+    color: #2a4a2a;
+    line-height: 1.7;
+    margin-bottom: 0.4rem;
+  }
+
+  .conclusion p:last-child { margin-bottom: 0; }
+
+  /* Sub heading */
+  .sub-heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2c5f8a;
+    margin: 1.25rem 0 0.6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #d8d4cc;
+  }
+
+  .sub-heading:first-child { margin-top: 0; }
+
+  /* Body text */
+  p {
+    font-size: 14px;
+    color: #4a4a46;
+    line-height: 1.8;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Bullet list */
+  ul.dot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  ul.dot-list li {
+    font-size: 14px;
+    color: #4a4a46;
+    padding: 4px 0 4px 1.25rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  ul.dot-list li::before {
+    content: "・";
+    position: absolute;
+    left: 0;
+    color: #2c5f8a;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 0.75rem 0;
+  }
+
+  .data-table th {
+    background: #e8f0f7;
+    color: #185fa5;
+    font-weight: 600;
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 2px solid #b8d0e8;
+  }
+
+  .data-table th:first-child { border-radius: 6px 0 0 0; }
+  .data-table th:last-child { border-radius: 0 6px 0 0; }
+
+  .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e8e4da;
+    color: #4a4a46;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table td strong { color: #1c1c1a; }
+
+  /* Risk tags */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .tag-low { background: #eaf3ea; color: #3a6b3a; }
+  .tag-high { background: #f7ecea; color: #8a3a2c; }
+  .tag-mid { background: #faeeda; color: #854f0b; }
+
+  /* Flow */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .flow-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .flow-connector {
+    width: 2px;
+    height: 28px;
+    background: #b8d0e8;
+    margin: 2px 0;
+  }
+
+  .flow-content {
+    padding: 4px 0 24px;
+    flex: 1;
+  }
+
+  .flow-content-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1c1a;
+    margin-bottom: 2px;
+  }
+
+  .flow-content-desc {
+    font-size: 13px;
+    color: #7a7a74;
+  }
+
+  .flow-step:last-child .flow-content { padding-bottom: 0; }
+  .flow-step:last-child .flow-connector { display: none; }
+
+  /* Options box */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0.75rem 0;
+  }
+
+  @media (max-width: 560px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-card {
+    border: 1px solid #d8d4cc;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    background: #faf8f4;
+  }
+
+  .option-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1c1c1a;
+    margin-bottom: 0.35rem;
+  }
+
+  .option-card p {
+    font-size: 13px;
+    color: #6a6a66;
+    margin: 0;
+  }
+
+  /* Note */
+  .note {
+    background: #faf8f4;
+    border: 1px solid #d8d4cc;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+    font-size: 13px;
+    color: #6a6a66;
+    line-height: 1.6;
+  }
+
+  .note::before {
+    content: "※ ";
+    font-weight: 600;
+    color: #854f0b;
+  }
+
+  /* Source label */
+  .source-label {
+    display: inline-block;
+    font-size: 11px;
+    color: #9a9a94;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Quote box */
+  .quote-box {
+    background: #faf8f4;
+    border-left: 3px solid #b8b4aa;
+    border-radius: 0 6px 6px 0;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0;
+    font-size: 13px;
+    color: #6a6a66;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="doc-title">オンラインショップ・サマースクール・バザー出店、<br>学童費に関する専門家見解のまとめ</div>
+    <div class="doc-date">2026年6月（顧問税理士・弁護士への相談結果）</div>
+  </div>
+
+  <!-- Background -->
+  <div class="bg-box">
+    オンラインショップの開設に向けて、知り合いの税理士および弁護士に無料の範囲で相談し、にぎわい交流館経由での専門家相談（有料相談１時間を無料で受けることができる制度）を利用して、税理士に確認できたことを皆さまにご共有します。
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-box">
+    <div class="summary-title">全体の要点</div>
+    <ul class="dot-list">
+      <li>オンラインショップ・サマースクール・バザー出店、いずれも<strong>現行定款に沿った活動として整理可能であり、定款変更は不要</strong></li>
+      <li>いずれも一定規模以上になるまでは、<strong>活動実費分のみの徴収</strong>または<strong>継続性のない単発事業</strong>として、法人税の申告は不要</li>
+      <li><strong>事業性</strong>の判断基準：原価＋人件費を超える売上が立ち始めたら事業性あり</li>
+      <li><strong>継続性</strong>の判断基準：利益が出ていても、単発イベント的であれば継続性なし</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: 定款変更の要否 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      <span class="section-title">定款変更の要否について</span>
+    </div>
+    <div class="section-body">
+
+      <div class="conclusion">
+        <div class="conclusion-label">結論：当面は定款変更不要</div>
+        <p>オンラインショップ・サマースクール・バザー出店のいずれについても、<strong>現行定款に沿った活動として整理でき、定款変更は不要</strong>との見解をいただきました。</p>
+      </div>
+
+      <div class="sub-heading">税務上の申告について</div>
+      <ul class="dot-list">
+        <li>定款変更をしない以上、会計上も収益事業として種別を分ける必要はない</li>
+        <li>売上から経費・原価を差し引いた<strong>利益に対して法人税がかかる</strong>ため、一定規模に達するまでは申告する必要もない</li>
+      </ul>
+
+      <div class="sub-heading">「収益事業」にあたるかどうかの法的基準（弁護士見解）</div>
+      <p>「業にあたる（＝業とする）」とされる基準として、以下の<strong>2つの要件を両方満たす</strong>場合に収益事業と見なされる可能性が高くなります。</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>要件</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>反復継続性</strong></td><td>同じ行為を繰り返すこと</td></tr>
+          <tr><td><strong>事業的規模</strong></td><td>社会通念上、事業と見なせる程度であること</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-heading">販売形態別のリスク評価</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>販売形態</th><th>反復継続性</th><th>収益事業該当リスク</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>バザー・説明会での販売</td>
+            <td>低い（単発・不定期）</td>
+            <td><span class="tag tag-low">低い</span></td>
+          </tr>
+          <tr>
+            <td>オンラインショップ（常時販売）</td>
+            <td>高い（常に購入できる状態）</td>
+            <td><span class="tag tag-high">高い</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>オンラインショップは「常に販売できる体制」になるため反復継続性があると見なされやすく、<strong>規模が拡大すれば収益事業に該当する可能性が高い</strong>との見解です。</p>
+
+      <div class="sub-heading">今後の方針</div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-line">
+            <div class="flow-dot">1</div>
+            <div class="flow-connector"></div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-content-title">小規模でショップを開設（定款変更なし）</div>
+            <div class="flow-content-desc">売上の推移を見ながら定款変更の要否を判断する</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-line">
+            <div class="flow-dot">2</div>
+            <div class="flow-connector"></div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-content-title">売上が100〜200万円規模に近づいたら税理士に再相談</div>
+            <div class="flow-content-desc">定款変更・収益事業の区分経理への移行を検討する</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-line">
+            <div class="flow-dot">3</div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-content-title">必要に応じて定款変更→総会で承認</div>
+            <div class="flow-content-desc">定款変更が必要になった場合は総会での承認が必要となります</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2: オンラインショップ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      <span class="section-title">オンラインショップの定款上の扱いについて</span>
+    </div>
+    <div class="section-body">
+
+      <div class="conclusion">
+        <div class="conclusion-label">結論：現行定款の範囲内で実施可能</div>
+        <p>父母（ボランティア）や子どもたちが学園の活動の中で作ったものを販売する場合は、<strong>定款第5条1号・2号の範囲内</strong>で問題ないとの見解です。</p>
+      </div>
+
+      <div class="sub-heading">規模が拡大した場合の整理</div>
+      <p>一定以上の規模になり、教育活動の一環というより「物販」が独立した事業のように見えてくる場合は、以下のいずれかへの整理が必要になります。</p>
+      <div class="options-grid">
+        <div class="option-card">
+          <div class="option-card-title">選択肢A：定款第5条4号「その他の事業」</div>
+          <p>収益事業として区分し、定款上に明記する</p>
+        </div>
+        <div class="option-card">
+          <div class="option-card-title">選択肢B：父母の会の活動として位置づける</div>
+          <p>学園とは別の主体として運営する</p>
+        </div>
+      </div>
+
+      <div class="note">
+        規模の目安：学校事業全体が年間6千万円規模であることを踏まえると、<strong>年間数百万円規模であれば学校事業の一環</strong>と位置づけられるとのことです。
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 3: サマースクール -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      <span class="section-title">サマースクールについて</span>
+    </div>
+    <div class="section-body">
+
+      <div class="conclusion">
+        <div class="conclusion-label">結論：定款上の事業として問題なし</div>
+        <p>一定規模に達するまでは、法人税の申告は不要です。</p>
+      </div>
+
+      <div class="sub-heading">税理士の回答例</div>
+      <div class="quote-box">
+        「実費分なので申告しなかった」でOK
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4: バザー出店 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">4</span>
+      <span class="section-title">バザー出店について</span>
+    </div>
+    <div class="section-body">
+
+      <div class="conclusion">
+        <div class="conclusion-label">結論：金額が大きすぎなければ法人税の対象にならない</div>
+        <p>例：年間売上30万円、粗利が半分程度であれば、人件費を考慮すると実費程度と考えてよいとのことです。</p>
+      </div>
+
+      <div class="sub-heading">法人税の対象となる条件</div>
+      <p>以下の<strong>2点を両方満たした場合</strong>に法人税の対象になります。</p>
+      <ul class="dot-list">
+        <li>継続性</li>
+        <li>事業性</li>
+      </ul>
+
+      <div class="sub-heading">税理士の回答例</div>
+      <div class="quote-box">
+        「継続性のないものなので、法人税の対象から外れます」
+      </div>
+      <div class="quote-box">
+        「実費程度のものなので、法人税の対象から外れます」
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 5: 学童費 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">5</span>
+      <span class="section-title">学童費の会計処理と余剰金の扱いについて</span>
+    </div>
+    <div class="section-body">
+
+      <div class="conclusion">
+        <div class="conclusion-label">結論：余剰金を学園全体の支出に充てることは会計上問題なし</div>
+        <p>学童関連収入が支出を上回り余剰金が生じた場合、その余剰分を<strong>学園全体のその他の支出に充てることは会計上問題ない</strong>との見解をいただきました。</p>
+      </div>
+
+      <div class="sub-heading">余剰金の取り扱い：2つの選択肢</div>
+      <div class="options-grid">
+        <div class="option-card">
+          <div class="option-card-title">選択肢A：学園全体の運営費に充てる</div>
+          <p>通常の収益として処理。会計上問題なし。</p>
+        </div>
+        <div class="option-card">
+          <div class="option-card-title">選択肢B：学童費として積み立てる</div>
+          <p>「預り金」のような形で処理してプール。内部で積立ルールを決める必要あり。</p>
+        </div>
+      </div>
+
+      <div class="note">
+        余剰金を内部で積み立てておきたい場合は、「預り金」のような形で処理してプールしておくことを内部で決定すれば、それに準ずる形での会計処理も可能とのことです。
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
