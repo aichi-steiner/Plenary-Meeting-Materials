@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年度 専科教員コマ数 学年別一覧（科目別・削減シナリオ付き）</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;font-size:13px;color:#1a1a1a;background:#f5f4f0;padding:24px 20px}
+h1{font-size:15px;font-weight:500;margin-bottom:3px}
+.subtitle{font-size:11px;color:#999;margin-bottom:20px}
+
+.impact-panel{background:#fff;border-radius:10px;border:0.5px solid #e0ddd4;padding:14px 16px;margin-bottom:18px}
+.impact-title{font-size:12px;font-weight:600;color:#2F3B5C;margin-bottom:10px}
+table.impact-table{width:100%;border-collapse:collapse}
+table.impact-table th{font-size:10px;color:#fff;background:#2F3B5C;padding:6px 8px;text-align:right;font-weight:500}
+table.impact-table th:first-child{text-align:left}
+table.impact-table td{font-size:12px;padding:6px 8px;text-align:right;border-bottom:0.5px solid #ece9e0;font-variant-numeric:tabular-nums}
+table.impact-table td.s-label{text-align:left;font-weight:500}
+table.impact-table tr.impact-total td{font-weight:700;background:#f7f6f1;border-top:1px solid #ddd}
+table.impact-table td.s-save{color:#B4483A}
+.impact-note{font-size:10.5px;color:#999;margin-top:8px}
+
+.dept-block{margin-bottom:28px}
+.dept-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 12px;border-radius:8px}
+.dept-header.syoto{background:#eaf3de}
+.dept-header.chuto{background:#e6f1fb}
+.dept-header.koto{background:#eeedfe}
+.dept-header.shochuto{background:#fff3e0}
+.dept-name{font-size:13px;font-weight:500}
+.dept-name.syoto{color:#3B6D11}
+.dept-name.chuto{color:#185FA5}
+.dept-name.koto{color:#3C3489}
+.dept-name.shochuto{color:#854F0B}
+.dept-grade{font-size:11px;color:#999;margin-left:2px}
+.dept-summary{margin-left:auto;text-align:right}
+.dept-total-koma{font-size:14px;font-weight:500}
+.dept-total-koma.syoto{color:#3B6D11}
+.dept-total-koma.chuto{color:#185FA5}
+.dept-total-koma.koto{color:#3C3489}
+.dept-total-koma.shochuto{color:#854F0B}
+
+.grade-grid{display:grid;gap:10px}
+.grade-grid.g3{grid-template-columns:repeat(3,1fr)}
+.grade-grid.g2{grid-template-columns:repeat(2,1fr)}
+.grade-grid.g3h{grid-template-columns:repeat(3,1fr)}
+
+.grade-card{background:#fff;border-radius:8px;border:0.5px solid #e0ddd4;overflow:hidden}
+.grade-card-header{display:flex;align-items:baseline;justify-content:space-between;padding:7px 10px 6px;border-bottom:0.5px solid #ece9e0}
+.grade-label{font-size:12px;font-weight:500}
+.grade-label.syoto{color:#3B6D11}
+.grade-label.chuto{color:#185FA5}
+.grade-label.koto{color:#3C3489}
+.grade-koma{font-size:13px;font-weight:500;color:#1a1a1a}
+
+table.inner{width:100%;border-collapse:collapse}
+table.inner td{padding:4px 8px;border-bottom:0.5px solid #f0ede4;font-size:12px;vertical-align:middle}
+table.inner tr:last-child td{border-bottom:none}
+table.inner tr.col-head td{font-size:9.5px;color:#aaa;padding-bottom:2px;border-bottom:0.5px solid #e5e2d8}
+td.t-subj{color:#333}
+td.t-koma{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:3.2em;font-weight:500}
+td.t-cut30{color:#a8781f;font-weight:400}
+td.t-cut50{color:#B4483A;font-weight:400}
+
+.badge{display:inline-block;padding:1px 5px;border-radius:10px;font-size:10px;white-space:nowrap;margin:1px}
+.badge-english{background:#E6F1FB;color:#185FA5}
+.badge-korean{background:#EEEDFE;color:#3C3489}
+.badge-craft{background:#EAF3DE;color:#3B6D11}
+.badge-music{background:#FAECE7;color:#993C1D}
+.badge-art{background:#FBEAF0;color:#72243E}
+.badge-sport{background:#FAEEDA;color:#854F0B}
+.badge-other{background:#F1EFE8;color:#5F5E5A}
+
+.summary-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px}
+.sum-cell{background:#fff;border-radius:8px;border:0.5px solid #e0ddd4;padding:10px 12px}
+.sum-cell .lbl{font-size:10px;color:#999;margin-bottom:3px}
+.sum-cell .val{font-size:15px;font-weight:500}
+.sum-cell.syoto .val{color:#3B6D11}
+.sum-cell.chuto .val{color:#185FA5}
+.sum-cell.koto .val{color:#3C3489}
+.sum-cell.shochuto .val{color:#854F0B}
+.sum-cell.total .val{color:#1a1a1a}
+
+.note{font-size:11px;color:#aaa;line-height:1.7;margin-top:16px;padding-top:10px;border-top:0.5px solid #e0ddd4}
+</style>
+</head>
+<body>
+
+<h1>2026年度 専科教員コマ数 学年別一覧（科目別・削減シナリオ付き）</h1>
+<p class="subtitle">2026年度予算シート（2026/03/28版）より集計　※10・11年は合同クラスとして合算　※同一学年内の同一科目は合算表示</p>
+
+<div class="impact-panel">
+  <div class="impact-title">コマ数削減シナリオ別の財務影響（1コマ2,500円換算）</div>
+  <table class="impact-table">
+    <thead>
+      <tr>
+        <th>区分</th><th>現状コマ数</th><th>現状コマ給</th>
+        <th>30%削減後</th><th>削減額</th>
+        <th>50%削減後</th><th>削減額</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="">
+        <td class="s-label">初等部（1〜6年）</td>
+        <td class="s-num">1,620コマ</td>
+        <td class="s-yen">4,050,000円</td>
+        <td class="s-yen">2,835,000円</td>
+        <td class="s-yen s-save">▲1,215,000円</td>
+        <td class="s-yen">2,025,000円</td>
+        <td class="s-yen s-save">▲2,025,000円</td>
+      </tr>
+      <tr class="">
+        <td class="s-label">中等部（7・8年）</td>
+        <td class="s-num">904コマ</td>
+        <td class="s-yen">2,260,000円</td>
+        <td class="s-yen">1,582,000円</td>
+        <td class="s-yen s-save">▲678,000円</td>
+        <td class="s-yen">1,130,000円</td>
+        <td class="s-yen s-save">▲1,130,000円</td>
+      </tr>
+      <tr class="">
+        <td class="s-label">高等部（9〜12年）</td>
+        <td class="s-num">1,281コマ</td>
+        <td class="s-yen">3,202,500円</td>
+        <td class="s-yen">2,241,750円</td>
+        <td class="s-yen s-save">▲960,750円</td>
+        <td class="s-yen">1,601,250円</td>
+        <td class="s-yen s-save">▲1,601,250円</td>
+      </tr>
+      <tr class="impact-total">
+        <td class="s-label">全体合計</td>
+        <td class="s-num">3,805コマ</td>
+        <td class="s-yen">9,512,500円</td>
+        <td class="s-yen">6,658,750円</td>
+        <td class="s-yen s-save">▲2,853,750円</td>
+        <td class="s-yen">4,756,250円</td>
+        <td class="s-yen s-save">▲4,756,250円</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="impact-note">
+    ※ 2027年度予算の現金ベース赤字（約29,945,000円）に対する充当率：30%削減で約9.5%／50%削減で約15.9%
+  </div>
+</div>
+
+<div class="summary-bar">
+  <div class="sum-cell syoto"><div class="lbl">初等部（1〜6年）</div><div class="val">1,620コマ</div></div>
+  <div class="sum-cell chuto"><div class="lbl">中等部（7・8年）</div><div class="val">904コマ</div></div>
+  <div class="sum-cell shochuto"><div class="lbl">初等部＋中等部</div><div class="val">2,524コマ</div></div>
+  <div class="sum-cell koto"><div class="lbl">高等部（9〜12年）</div><div class="val">1,281コマ</div></div>
+  <div class="sum-cell total"><div class="lbl">全体</div><div class="val">3,805コマ</div></div>
+</div>
+
+<!-- 初等部 -->
+<div class="dept-block">
+  <div class="dept-header syoto">
+    <span class="dept-name syoto">初等部</span><span class="dept-grade">1〜6年</span>
+    <div class="dept-summary">
+      <div class="dept-total-koma syoto">1,620コマ</div>
+    </div>
+  </div>
+  <div class="grade-grid g3">
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">1年</span><span class="grade-koma">185コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">55</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">51</td><td class="t-koma t-cut30">36</td><td class="t-koma t-cut50">26</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">音楽</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">27</td><td class="t-koma t-cut30">19</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">24</td><td class="t-koma t-cut30">17</td><td class="t-koma t-cut50">12</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">2年</span><span class="grade-koma">202コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">60</td><td class="t-koma t-cut30">42</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">54</td><td class="t-koma t-cut30">38</td><td class="t-koma t-cut50">27</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">30</td><td class="t-koma t-cut30">21</td><td class="t-koma t-cut50">15</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">3年</span><span class="grade-koma">174コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">61</td><td class="t-koma t-cut30">43</td><td class="t-koma t-cut50">31</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">27</td><td class="t-koma t-cut30">19</td><td class="t-koma t-cut50">14</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">4年</span><span class="grade-koma">200コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">60</td><td class="t-koma t-cut30">42</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">27</td><td class="t-koma t-cut30">19</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">オイリュトミー</span></td><td class="t-koma">27</td><td class="t-koma t-cut30">19</td><td class="t-koma t-cut50">14</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">5年</span><span class="grade-koma">343コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">57</td><td class="t-koma t-cut30">40</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">57</td><td class="t-koma t-cut30">40</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">オイリュトミー</span></td><td class="t-koma">57</td><td class="t-koma t-cut30">40</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">彫塑</span></td><td class="t-koma">55</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">31</td><td class="t-koma t-cut30">22</td><td class="t-koma t-cut50">16</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label syoto">6年</span><span class="grade-koma">516コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">87</td><td class="t-koma t-cut30">61</td><td class="t-koma t-cut50">44</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">83</td><td class="t-koma t-cut30">58</td><td class="t-koma t-cut50">42</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">59</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">59</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">彫塑</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">音楽</span><span class="badge badge-music">アンサンブル</span></td><td class="t-koma">57</td><td class="t-koma t-cut30">40</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">55</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- 中等部 -->
+<div class="dept-block">
+  <div class="dept-header chuto">
+    <span class="dept-name chuto">中等部</span><span class="dept-grade">7・8年</span>
+    <div class="dept-summary">
+      <div class="dept-total-koma chuto">904コマ</div>
+    </div>
+  </div>
+  <div class="grade-grid g2">
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label chuto">7年</span><span class="grade-koma">559コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">88</td><td class="t-koma t-cut30">62</td><td class="t-koma t-cut50">44</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">87</td><td class="t-koma t-cut30">61</td><td class="t-koma t-cut50">44</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">彫塑</span></td><td class="t-koma">62</td><td class="t-koma t-cut30">43</td><td class="t-koma t-cut50">31</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">62</td><td class="t-koma t-cut30">43</td><td class="t-koma t-cut50">31</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">音楽</span><span class="badge badge-music">アンサンブル</span></td><td class="t-koma">59</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">オイリュトミー</span></td><td class="t-koma">58</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">29</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">15</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">園芸</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label chuto">8年</span><span class="grade-koma">345コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">85</td><td class="t-koma t-cut30">59</td><td class="t-koma t-cut50">43</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-art">書道</span></td><td class="t-koma">61</td><td class="t-koma t-cut30">43</td><td class="t-koma t-cut50">31</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">88</td><td class="t-koma t-cut30">62</td><td class="t-koma t-cut50">44</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">56</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">31</td><td class="t-koma t-cut30">22</td><td class="t-koma t-cut50">16</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">24</td><td class="t-koma t-cut30">17</td><td class="t-koma t-cut50">12</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- 初等部＋中等部 合計バー -->
+<div class="dept-header shochuto" style="margin-bottom:24px;border-radius:8px">
+  <span class="dept-name shochuto">初等部＋中等部 合計</span><span class="dept-grade">1〜8年</span>
+  <div class="dept-summary">
+    <div class="dept-total-koma shochuto">2,524コマ</div>
+  </div>
+</div>
+
+<!-- 高等部 -->
+<div class="dept-block">
+  <div class="dept-header koto">
+    <span class="dept-name koto">高等部</span><span class="dept-grade">9〜12年</span>
+    <div class="dept-summary">
+      <div class="dept-total-koma koto">1,281コマ</div>
+    </div>
+  </div>
+  <div class="grade-grid g3h">
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label koto">9年</span><span class="grade-koma">568コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-craft">手仕事</span></td><td class="t-koma">90</td><td class="t-koma t-cut30">63</td><td class="t-koma t-cut50">45</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">国語</span></td><td class="t-koma">60</td><td class="t-koma t-cut30">42</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">数学</span></td><td class="t-koma">60</td><td class="t-koma t-cut30">42</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">木工</span></td><td class="t-koma">56</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">55</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">111</td><td class="t-koma t-cut30">78</td><td class="t-koma t-cut50">56</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">製本／美術</span></td><td class="t-koma">54</td><td class="t-koma t-cut30">38</td><td class="t-koma t-cut50">27</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">PC</span></td><td class="t-koma">30</td><td class="t-koma t-cut30">21</td><td class="t-koma t-cut50">15</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">24</td><td class="t-koma t-cut30">17</td><td class="t-koma t-cut50">12</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label koto">10・11年</span><span class="grade-koma">405コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">国語</span></td><td class="t-koma">62</td><td class="t-koma t-cut30">43</td><td class="t-koma t-cut50">31</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">57</td><td class="t-koma t-cut30">40</td><td class="t-koma t-cut50">29</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">118</td><td class="t-koma t-cut30">83</td><td class="t-koma t-cut50">59</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">製本／美術</span></td><td class="t-koma">59</td><td class="t-koma t-cut30">41</td><td class="t-koma t-cut50">30</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">PC</span></td><td class="t-koma">31</td><td class="t-koma t-cut30">22</td><td class="t-koma t-cut50">16</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">28</td><td class="t-koma t-cut30">20</td><td class="t-koma t-cut50">14</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">50</td><td class="t-koma t-cut30">35</td><td class="t-koma t-cut50">25</td></tr>
+      </table>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-card-header"><span class="grade-label koto">12年</span><span class="grade-koma">308コマ</span></div>
+      <table class="inner">
+        <tr class="col-head"><td class="t-subj"></td><td class="t-koma">現状</td><td class="t-koma t-cut30">-30%</td><td class="t-koma t-cut50">-50%</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-korean">韓国語</span></td><td class="t-koma">55</td><td class="t-koma t-cut30">39</td><td class="t-koma t-cut50">28</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-music">伴奏</span></td><td class="t-koma">54</td><td class="t-koma t-cut30">38</td><td class="t-koma t-cut50">27</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-english">英語</span></td><td class="t-koma">75</td><td class="t-koma t-cut30">53</td><td class="t-koma t-cut50">38</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">数学</span></td><td class="t-koma">50</td><td class="t-koma t-cut30">35</td><td class="t-koma t-cut50">25</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-other">製本／美術</span></td><td class="t-koma">50</td><td class="t-koma t-cut30">35</td><td class="t-koma t-cut50">25</td></tr>
+        <tr><td class="t-subj"><span class="badge badge-sport">体育</span></td><td class="t-koma">24</td><td class="t-koma t-cut30">17</td><td class="t-koma t-cut50">12</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div class="note">
+※ 10・11年は合同クラスとして合算計上。<br>
+※ 体育（複数担当者）の「8〜12年合同」行は各学年の生徒数等に応じ按分（端数四捨五入）。<br>
+※ 各カードの科目は、同一学年内で同じ科目を複数の講師が分担している場合は合算して表示。<br>
+※ -30%／-50%は各科目のコマ数を一律削減したと仮定した場合の参考値（端数四捨五入）。<br>
+※ 講師の個人名は本表からは省略。
+</div>
+
+</body>
+</html>
