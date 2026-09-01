@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>参加費 × 常勤教員数 シミュレーション（支出削減なし）</title>
+<style>
+  :root {
+    --forest: #2C5F2D;
+    --forest-dark: #1F4620;
+    --moss: #7A9D54;
+    --clay: #B5651D;
+    --gold: #C9A227;
+    --cream: #FAF9F5;
+    --paper: #FFFFFF;
+    --line: #E1DFD6;
+    --ink: #33362E;
+    --muted: #767565;
+    --input-bg: #FFF7DC;
+    --input-border: #E3C777;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Yu Gothic", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header { margin-bottom: 10px; }
+  header h1 {
+    font-size: 1.6rem;
+    color: var(--forest);
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+  }
+  header p {
+    color: var(--muted);
+    margin: 0 0 4px;
+    font-size: 0.92rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--forest);
+    color: #fff;
+    font-size: 0.76rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .sliders-panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 20px 0 24px;
+  }
+  .sliders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .sliders-grid { grid-template-columns: 1fr; }
+  }
+  .slider-field label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .slider-field label .current {
+    font-weight: 700;
+    color: var(--forest);
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .slider-field input[type="range"] {
+    width: 100%;
+    accent-color: var(--forest);
+    height: 22px;
+  }
+  .slider-field .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .slider-field .note {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .headline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 520px) {
+    .headline { grid-template-columns: 1fr; }
+  }
+  .stat {
+    background: var(--forest);
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px 22px;
+    transition: background 0.15s ease;
+  }
+  .stat.negative { background: var(--clay); }
+  .stat .stat-label {
+    font-size: 0.78rem;
+    opacity: 0.88;
+    margin-bottom: 6px;
+  }
+  .stat .stat-value {
+    font-size: 1.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .stat-value .unit {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 2px;
+  }
+  .stat .stat-sub {
+    font-size: 0.78rem;
+    margin-top: 8px;
+    opacity: 0.9;
+  }
+
+  .grid-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 780px) {
+    .grid-two { grid-template-columns: 1fr; }
+  }
+  .panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .panel h2 {
+    font-size: 0.92rem;
+    color: var(--forest);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--forest);
+  }
+  table.breakdown {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+  table.breakdown td {
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.breakdown td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  table.breakdown tr.grand td {
+    font-weight: 700;
+    color: var(--forest);
+    background: #E8EEDD;
+    border-top: 2px solid var(--forest);
+    border-bottom: 2px solid var(--forest);
+  }
+  table.breakdown tr.grand.negative td {
+    color: var(--clay);
+    background: #FBEEE0;
+    border-color: var(--clay);
+  }
+
+  .breakeven-panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-top: 20px;
+  }
+  .breakeven-panel h2 {
+    font-size: 0.92rem;
+    color: var(--forest);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--forest);
+  }
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  table.matrix th, table.matrix td {
+    padding: 7px 10px;
+    text-align: center;
+    border: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  table.matrix th {
+    background: var(--forest);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  table.matrix th.corner { background: var(--forest-dark); }
+  table.matrix td.rowhead {
+    background: #F3F6EF;
+    font-weight: 700;
+    color: var(--forest);
+    text-align: left;
+  }
+  table.matrix td.pos { color: var(--forest); font-weight: 600; }
+  table.matrix td.neg { color: var(--clay); }
+  table.matrix td.current {
+    outline: 3px solid var(--gold);
+    outline-offset: -3px;
+    font-weight: 700;
+  }
+
+  footer {
+    margin-top: 28px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  details.refs { margin-top: 18px; }
+  details.refs summary {
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--forest);
+    padding: 6px 0;
+    user-select: none;
+  }
+  details.refs summary:hover { text-decoration: underline; }
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 10px;
+  }
+  .ref-table td {
+    padding: 5px 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ref-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="badge">参加費・常勤教員数・専科教員謝金を動かして考えるシミュレーション</span>
+    <h1>参加費 × 常勤教員数 × 専科教員謝金 シミュレーション</h1>
+    <p>参加費・常勤教員数・専科教員謝金の3つを動かしながら、2027年度の収支がどう変わるかを一緒に確認できます。それ以外の項目（教育費など）は2027年度予算どおりに固定しています。</p>
+  </header>
+
+  <div class="sliders-panel">
+    <div class="sliders-grid">
+      <div class="slider-field">
+        <label>参加費（月額） <span class="current" id="disp-sankahi">59,000円</span></label>
+        <input type="range" id="in-sankahi" min="55000" max="95000" step="1000" value="59000">
+        <div class="range-labels"><span>55,000円</span><span>95,000円</span></div>
+        <span class="note">現行：55,000円</span>
+      </div>
+      <div class="slider-field">
+        <label>常勤教員人数 <span class="current" id="disp-jokin">13名</span></label>
+        <input type="range" id="in-jokin" min="10" max="17" step="1" value="13">
+        <div class="range-labels"><span>10名</span><span>17名</span></div>
+        <span class="note">2027年度予算：13名相当</span>
+      </div>
+      <div class="slider-field">
+        <label>専科教員謝金（年間） <span class="current" id="disp-senka">9,870,000円</span></label>
+        <input type="range" id="in-senka" min="2000000" max="12000000" step="100000" value="9870000">
+        <div class="range-labels"><span>200万円</span><span>1,200万円</span></div>
+        <span class="note">2027年度予算：987万円</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="headline">
+    <div class="stat" id="stat-jigyo">
+      <div class="stat-label">事業収支（教育活動そのものの収支）</div>
+      <div class="stat-value" id="val-jigyo">—</div>
+      <div class="stat-sub" id="sub-jigyo"></div>
+    </div>
+    <div class="stat" id="stat-toji">
+      <div class="stat-label">当期収支（新校舎関連支出を含む・現金ベース）</div>
+      <div class="stat-value" id="val-toji">—</div>
+      <div class="stat-sub" id="sub-toji"></div>
+    </div>
+  </div>
+
+  <div class="grid-two">
+    <div class="panel">
+      <h2>収入の見通し</h2>
+      <table class="breakdown">
+        <tr><td>参加費（理論値）</td><td class="num" id="out-sanka-riron">—</td></tr>
+        <tr><td>参加費（兄弟割引調整後）</td><td class="num" id="out-sanka-after">—</td></tr>
+        <tr><td>入学金・高等部進学金（固定）</td><td class="num">4,700,000</td></tr>
+        <tr><td>本部収入計・講座事業収入等（固定）</td><td class="num">2,592,000</td></tr>
+        <tr><td>入学時教材費・学童費等（固定）</td><td class="num">6,402,000</td></tr>
+        <tr><td>受取利息・配当金（固定）</td><td class="num">13,995</td></tr>
+        <tr class="grand"><td>収入合計</td><td class="num" id="out-shunyu">—</td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>支出の見通し（削減なし）</h2>
+      <table class="breakdown">
+        <tr><td>一般管理費・講座事業費等（固定）</td><td class="num">6,526,229</td></tr>
+        <tr><td>常勤教員給与（＝人数×月額21万円×12ヶ月）</td><td class="num" id="out-jokinkyuyo">—</td></tr>
+        <tr><td>借地駐車場費・設備・教育費等（固定）</td><td class="num">14,401,800</td></tr>
+        <tr><td>諸手当（固定）</td><td class="num">7,785,000</td></tr>
+        <tr><td>専科教員謝金</td><td class="num" id="out-senka">—</td></tr>
+        <tr><td>外部講師謝金・学童指導員謝金等（固定）</td><td class="num">7,449,000</td></tr>
+        <tr><td>保健衛生費・保険料等（固定）</td><td class="num">375,000</td></tr>
+        <tr><td>法定福利費（＝(常勤給与＋諸手当)×16.3%）</td><td class="num" id="out-houteifukuri">—</td></tr>
+        <tr class="grand negative"><td>事業支出合計</td><td class="num" id="out-jigyoshishutsu">—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="breakeven-panel">
+    <h2>参加費 × 常勤教員数 マトリクス（事業収支、万円）</h2>
+    <table class="matrix" id="matrix-table">
+      <!-- filled by JS -->
+    </table>
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:12px; margin-bottom:0;">緑＝黒字、オレンジ＝赤字。金色の枠は現在のスライダーの位置です。専科教員謝金は、上のスライダーの現在値で計算しています。</p>
+  </div>
+
+  <details class="refs">
+    <summary>前提条件の詳細を開く</summary>
+    <table class="ref-table">
+      <tr><td>生徒数</td><td class="num">85名（2027年度予算どおり・固定）</td></tr>
+      <tr><td>兄弟割引調整率</td><td class="num">97.1%（現行制度）</td></tr>
+      <tr><td>新校舎関連支出（純額）</td><td class="num">17,007,006円（2027年度予算どおり・固定）</td></tr>
+      <tr><td>教育費</td><td class="num">5,500,000円（削減せず・固定）</td></tr>
+    </table>
+  </details>
+
+  <footer>
+    ※ このシミュレーションは、参加費・常勤教員数・専科教員謝金の3つを動かした場合の試算です。教育費など、それ以外の支出項目の見直しは行っていません。生徒数は2027年度予算の85名で固定しています。<br>
+    上記3つ以外の項目は、2027年度予算の実績値にもとづく固定値です。
+  </footer>
+</div>
+
+<script>
+function fmt(n) {
+  const rounded = Math.round(n);
+  const sign = rounded < 0 ? "▲" : "";
+  return sign + Math.abs(rounded).toLocaleString("ja-JP");
+}
+function fmtMan(n) {
+  const rounded = Math.round(n / 10000);
+  return rounded; // signed
+}
+
+const SEITOSU = 85;
+const KYOUDAI = 0.971;
+const SHINKOSHA = 17007006;
+
+const FIXED_INCOME = 4700000 + 2592000 + 6402000 + 13995; // 入学金等+本部収入等+教材費等+利息等
+const FIXED_EXPENSE_NO_TEACHER_NO_SENKA = 6526229 + 14401800 + 7449000 + 375000; // 常勤給与・諸手当・専科教員謝金・法定福利費を除く固定支出
+
+function calcJigyoToji(sankahi, jokin, senka) {
+  const sankaRiron = SEITOSU * sankahi * 12;
+  const sankaAfter = sankaRiron * KYOUDAI;
+  const shunyu = sankaAfter + FIXED_INCOME;
+
+  const jokinkyuyo = jokin * 210000 * 12;
+  const shotate = 7785000;
+  const houteifukuri = (jokinkyuyo + shotate) * 0.163;
+  const jigyoshishutsu = FIXED_EXPENSE_NO_TEACHER_NO_SENKA + jokinkyuyo + shotate + senka + houteifukuri;
+
+  const jigyoshuushi = shunyu - jigyoshishutsu;
+  const toji = jigyoshuushi - SHINKOSHA;
+
+  return { sankaRiron, sankaAfter, shunyu, jokinkyuyo, houteifukuri, jigyoshishutsu, jigyoshuushi, toji };
+}
+
+function render() {
+  const sankahi = parseInt(document.getElementById("in-sankahi").value, 10);
+  const jokin = parseInt(document.getElementById("in-jokin").value, 10);
+  const senka = parseInt(document.getElementById("in-senka").value, 10);
+
+  document.getElementById("disp-sankahi").textContent = sankahi.toLocaleString("ja-JP") + "円";
+  document.getElementById("disp-jokin").textContent = jokin + "名";
+  document.getElementById("disp-senka").textContent = senka.toLocaleString("ja-JP") + "円";
+
+  const r = calcJigyoToji(sankahi, jokin, senka);
+
+  document.getElementById("out-sanka-riron").textContent = fmt(r.sankaRiron);
+  document.getElementById("out-sanka-after").textContent = fmt(r.sankaAfter);
+  document.getElementById("out-shunyu").textContent = fmt(r.shunyu);
+  document.getElementById("out-jokinkyuyo").textContent = fmt(r.jokinkyuyo);
+  document.getElementById("out-senka").textContent = fmt(senka);
+  document.getElementById("out-houteifukuri").textContent = fmt(r.houteifukuri);
+  document.getElementById("out-jigyoshishutsu").textContent = fmt(r.jigyoshishutsu);
+
+  document.getElementById("val-jigyo").innerHTML = fmt(r.jigyoshuushi) + '<span class="unit">円</span>';
+  document.getElementById("val-toji").innerHTML = fmt(r.toji) + '<span class="unit">円</span>';
+  document.getElementById("stat-jigyo").classList.toggle("negative", r.jigyoshuushi < 0);
+  document.getElementById("stat-toji").classList.toggle("negative", r.toji < 0);
+  document.getElementById("sub-jigyo").textContent = r.jigyoshuushi >= 0 ? "黒字化ラインを超えています" : "黒字化まであと " + fmt(-r.jigyoshuushi) + "円";
+  document.getElementById("sub-toji").textContent = r.toji >= 0 ? "新校舎の返済まで含めても黒字です" : "新校舎の返済まで含めると赤字です";
+
+  buildMatrix(sankahi, jokin, senka);
+}
+
+function buildMatrix(curSanka, curJokin, curSenka) {
+  const feeSteps = [55000, 59000, 65000, 70000, 75000, 80000, 85000, 90000];
+  const teacherSteps = [11, 12, 13, 14, 15, 16, 17];
+
+  let html = "<tr><th class='corner'>常勤\\人数 ＼ 参加費</th>";
+  feeSteps.forEach(f => { html += `<th>${(f/1000)}千円</th>`; });
+  html += "</tr>";
+
+  teacherSteps.forEach(t => {
+    html += `<tr><td class="rowhead">${t}名</td>`;
+    feeSteps.forEach(f => {
+      const r = calcJigyoToji(f, t, curSenka);
+      const man = fmtMan(r.jigyoshuushi);
+      const cls = r.jigyoshuushi >= 0 ? "pos" : "neg";
+      const isCurrent = (t === curJokin && f === curSanka) ? " current" : "";
+      html += `<td class="${cls}${isCurrent}">${man >= 0 ? "+" : ""}${man}</td>`;
+    });
+    html += "</tr>";
+  });
+
+  document.getElementById("matrix-table").innerHTML = html;
+}
+
+document.getElementById("in-sankahi").addEventListener("input", render);
+document.getElementById("in-jokin").addEventListener("input", render);
+document.getElementById("in-senka").addEventListener("input", render);
+render();
+</script>
+</body>
+</html>
