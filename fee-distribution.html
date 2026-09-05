@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>参加費案 分布図</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --series-1:       #1e5b96;
+    --series-1-wash:  rgba(30,91,150,0.10);
+    --border-hair:    rgba(11,11,11,0.10);
+    --tooltip-bg:     #0b0b0b;
+    --tooltip-text:   #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --series-1:       #5b9eea;
+      --series-1-wash:  rgba(91,158,234,0.14);
+      --border-hair:    rgba(255,255,255,0.10);
+      --tooltip-bg:     #ffffff;
+      --tooltip-text:   #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page-plane:     #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --series-1:       #5b9eea;
+    --series-1-wash:  rgba(91,158,234,0.14);
+    --border-hair:    rgba(255,255,255,0.10);
+    --tooltip-bg:     #ffffff;
+    --tooltip-text:   #0b0b0b;
+  }
+
+  * { box-sizing: border-box; }
+
+  .viz-root {
+    background: var(--page-plane);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    padding: 28px 20px 40px;
+    min-height: 100%;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  h1 {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    letter-spacing: 0.01em;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 22px;
+  }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border-hair);
+    border-radius: 12px;
+    padding: 20px 20px 8px;
+    margin-bottom: 16px;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-tile {
+    background: var(--surface-1);
+    border: 1px solid var(--border-hair);
+    border-radius: 12px;
+    padding: 14px 14px 12px;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .chart-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 2px;
+  }
+  .chart-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+  }
+
+  svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
+  .bar {
+    fill: var(--series-1);
+    cursor: pointer;
+    transition: opacity 0.12s ease;
+  }
+  .bar:hover, .bar:focus { opacity: 0.82; outline: none; }
+  .bar-hit { fill: transparent; cursor: pointer; }
+  .tick-label { fill: var(--text-muted); font-size: 10.5px; }
+  .x-label { fill: var(--text-secondary); font-size: 10.5px; }
+  .cap-label { fill: var(--text-primary); font-size: 11px; font-weight: 600; }
+  .gridline { stroke: var(--gridline); stroke-width: 1; }
+  .baseline { stroke: var(--baseline); stroke-width: 1; }
+
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    font-size: 12px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    line-height: 1.5;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, -100%);
+    transition: opacity 0.1s ease;
+    z-index: 20;
+  }
+  .tooltip.show { opacity: 1; }
+
+  table.freq {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 4px 0 16px;
+  }
+  table.freq th, table.freq td {
+    text-align: right;
+    padding: 7px 8px;
+    border-bottom: 1px solid var(--gridline);
+    font-variant-numeric: tabular-nums;
+  }
+  table.freq th:first-child, table.freq td:first-child { text-align: left; }
+  table.freq th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 11.5px;
+  }
+  table.freq td { color: var(--text-primary); }
+  table.freq tr:last-child td { border-bottom: none; }
+
+  details { margin-top: 4px; }
+  summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding: 4px 0 14px;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before {
+    content: "▸ ";
+    color: var(--text-muted);
+  }
+  details[open] summary::before { content: "▾ "; }
+
+  table.raw {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  table.raw th, table.raw td {
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--gridline);
+    vertical-align: top;
+  }
+  table.raw th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 11px;
+  }
+  table.raw td.num { color: var(--text-muted); width: 28px; }
+  table.raw td.amt { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-primary); font-weight: 600; }
+  table.raw td.note { color: var(--text-secondary); }
+
+  .footnote {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="wrap">
+    <h1>参加費案 分布図</h1>
+    <p class="subtitle">回答 35件の金額分布</p>
+
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="stat-label">回答数</div>
+        <div class="stat-value">35</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">平均</div>
+        <div class="stat-value">¥67,689</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">中央値</div>
+        <div class="stat-value">¥69,000</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">最頻値</div>
+        <div class="stat-value">¥70,000</div>
+        <div class="stat-sub">11件・31%</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="chart-title">金額ごとの回答数</p>
+      <p class="chart-note">範囲 ¥59,000 〜 ¥90,100</p>
+      <svg class="chart" id="chart" viewBox="0 0 700 300" role="img" aria-label="参加費案の金額分布の棒グラフ"></svg>
+
+      <table class="freq">
+        <thead>
+          <tr><th>金額</th><th>件数</th><th>割合</th></tr>
+        </thead>
+        <tbody id="freqBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary>個別の回答一覧（備考つき・35件）を表示</summary>
+        <table class="raw">
+          <thead>
+            <tr><th>#</th><th>金額</th><th>備考</th></tr>
+          </thead>
+          <tbody id="rawBody"></tbody>
+        </table>
+        <p class="footnote">「金額」列の値をもとに上のグラフを作成。備考欄には条件付き回答やコメントをそのまま記載。</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+  const raw = [
+    [1, 65000, ""],
+    [2, 70000, "65000~70000"],
+    [3, 70000, ""],
+    [4, 59000, ""],
+    [5, 65000, ""],
+    [6, 70000, "専科コマ維持前提"],
+    [7, 72000, ""],
+    [8, 60000, ""],
+    [9, 80000, ""],
+    [10, 80000, ""],
+    [11, 70000, ""],
+    [12, 80000, ""],
+    [13, 62000, ""],
+    [14, 59000, ""],
+    [15, 90100, ""],
+    [16, 65000, ""],
+    [17, 60000, ""],
+    [18, 70000, "専科コマ維持前提"],
+    [19, 68000, ""],
+    [20, 69000, "65000~69000"],
+    [21, 62000, ""],
+    [22, 65000, ""],
+    [23, 59000, ""],
+    [24, 70000, "65000~70000"],
+    [25, 70000, "65000~75000"],
+    [26, 60000, "ふさわしいと思うのは65000"],
+    [27, 70000, "兄弟家庭は1人目のみ値上げ"],
+    [28, 70000, "ふさわしいと思うのは90000"],
+    [29, 70000, "学園の妥当額60,000"],
+    [30, 60000, "ふさわしいのは80000"],
+    [31, 60000, "専科減らすのであれば70000"],
+    [32, 80000, ""],
+    [33, 60000, "2人で10万円、3人で15万円"],
+    [34, 70000, "ふさわしいのは90,000円"],
+    [35, 59000, "正会員費月額6000円で合計65000円"],
+  ];
+
+  // frequency by amount
+  const counts = new Map();
+  raw.forEach(([, amt]) => counts.set(amt, (counts.get(amt) || 0) + 1));
+  const amounts = [...counts.keys()].sort((a, b) => a - b);
+  const n = raw.length;
+
+  const yen = v => "¥" + v.toLocaleString("ja-JP");
+
+  // ---- frequency table ----
+  const freqBody = document.getElementById("freqBody");
+  amounts.forEach(a => {
+    const c = counts.get(a);
+    const pct = (c / n * 100).toFixed(1);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${yen(a)}</td><td>${c}</td><td>${pct}%</td>`;
+    freqBody.appendChild(tr);
+  });
+
+  // ---- raw table ----
+  const rawBody = document.getElementById("rawBody");
+  raw.forEach(([idx, amt, note]) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td class="num">${idx}</td><td class="amt">${yen(amt)}</td><td class="note">${note}</td>`;
+    rawBody.appendChild(tr);
+  });
+
+  // ---- chart ----
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("chart");
+  const W = 700, H = 300;
+  const marginL = 34, marginR = 8, marginT = 10, marginB = 64;
+  const plotW = W - marginL - marginR;
+  const plotH = H - marginT - marginB;
+  const maxCount = Math.max(...amounts.map(a => counts.get(a)));
+  const yMax = Math.ceil((maxCount + 1) / 4) * 4; // headroom, round to nearest 4
+  const bandW = plotW / amounts.length;
+  const barW = Math.min(24, bandW * 0.5);
+
+  function el(tag, attrs) {
+    const e = document.createElementNS(svgNS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // gridlines + y ticks
+  const yTicks = [];
+  for (let t = 0; t <= yMax; t += yMax / 4) yTicks.push(Math.round(t));
+  yTicks.forEach(t => {
+    const y = marginT + plotH - (t / yMax) * plotH;
+    svg.appendChild(el("line", { x1: marginL, x2: W - marginR, y1: y, y2: y, class: "gridline" }));
+    const label = el("text", { x: marginL - 8, y: y + 3, "text-anchor": "end", class: "tick-label" });
+    label.textContent = t;
+    svg.appendChild(label);
+  });
+
+  // baseline
+  svg.appendChild(el("line", {
+    x1: marginL, x2: W - marginR,
+    y1: marginT + plotH, y2: marginT + plotH,
+    class: "baseline"
+  }));
+
+  const tooltip = document.getElementById("tooltip");
+
+  amounts.forEach((amt, i) => {
+    const c = counts.get(amt);
+    const cx = marginL + bandW * i + bandW / 2;
+    const barH = (c / yMax) * plotH;
+    const y = marginT + plotH - barH;
+    const r = 4;
+
+    // rounded-top bar via path (rect with top corners rounded, square at baseline)
+    const x0 = cx - barW / 2;
+    const path = `M${x0},${y + r}
+                  a${r},${r} 0 0 1 ${r},-${r}
+                  h${barW - 2 * r}
+                  a${r},${r} 0 0 1 ${r},${r}
+                  v${barH - r}
+                  h${-barW}
+                  z`;
+    const bar = el("path", { d: path, class: "bar", tabindex: "0" });
+    svg.appendChild(bar);
+
+    // wider invisible hit target
+    const hit = el("rect", {
+      x: cx - bandW / 2 + 2, y: marginT, width: bandW - 4, height: plotH,
+      class: "bar-hit"
+    });
+    svg.appendChild(hit);
+
+    // cap label
+    const cap = el("text", { x: cx, y: y - 8, "text-anchor": "middle", class: "cap-label" });
+    cap.textContent = c;
+    svg.appendChild(cap);
+
+    // x-axis label (rotated)
+    const lbl = el("text", {
+      x: cx, y: marginT + plotH + 16,
+      "text-anchor": "end", class: "x-label",
+      transform: `rotate(-40 ${cx} ${marginT + plotH + 16})`
+    });
+    lbl.textContent = yen(amt);
+    svg.appendChild(lbl);
+
+    const showTip = (evt) => {
+      const pct = (c / n * 100).toFixed(1);
+      tooltip.innerHTML = `<strong>${yen(amt)}</strong><br>${c}件（${pct}%）`;
+      tooltip.classList.add("show");
+      moveTip(evt);
+    };
+    const moveTip = (evt) => {
+      const pt = evt.touches ? evt.touches[0] : evt;
+      tooltip.style.left = pt.clientX + "px";
+      tooltip.style.top = (pt.clientY - 12) + "px";
+    };
+    const hideTip = () => tooltip.classList.remove("show");
+
+    [bar, hit].forEach(node => {
+      node.addEventListener("mouseenter", showTip);
+      node.addEventListener("mousemove", moveTip);
+      node.addEventListener("mouseleave", hideTip);
+    });
+    bar.addEventListener("focus", showTip);
+    bar.addEventListener("blur", hideTip);
+  });
+</script>
+</body>
+</html>
