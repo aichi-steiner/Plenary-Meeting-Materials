@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>専科教員 学年別科目一覧 2026年度</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; background: #f0f4f8; color: #2d3748; padding: 24px 16px; }
+h1 { text-align: center; font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; color: #1a202c; }
+.subtitle { text-align: center; font-size: 0.85rem; color: #718096; margin-bottom: 24px; }
+.section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: #fff; padding: 4px 12px; border-radius: 4px; margin-bottom: 12px; display: inline-block; }
+.shoto { background: #3182ce; }
+.chuto { background: #38a169; }
+.koto { background: #d69e2e; }
+.section-group { margin-bottom: 28px; }
+.grade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.grade-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; }
+.grade-header { padding: 10px 14px; font-weight: 700; font-size: 1rem; }
+.shoto-card .grade-header { background: #ebf8ff; color: #2b6cb0; border-bottom: 2px solid #bee3f8; }
+.chuto-card .grade-header { background: #f0fff4; color: #276749; border-bottom: 2px solid #9ae6b4; }
+.koto-card .grade-header { background: #fffff0; color: #975a16; border-bottom: 2px solid #faf089; }
+.subject-table { width: 100%; border-collapse: collapse; }
+.subject-table th { font-size: 0.72rem; color: #718096; font-weight: 600; padding: 6px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.subject-table th.koma-col { text-align: right; }
+.subject-table td { padding: 7px 10px; font-size: 0.88rem; border-bottom: 1px solid #f7fafc; vertical-align: middle; }
+.subject-table td.koma-num { text-align: right; font-variant-numeric: tabular-nums; color: #2d3748; font-weight: 600; white-space: nowrap; }
+.subject-table tr:last-child td { border-bottom: none; }
+.subject-badge { display: inline-block; background: #edf2f7; color: #4a5568; border-radius: 3px; padding: 1px 6px; font-size: 0.82rem; }
+.total-row td { border-top: 2px solid #e2e8f0 !important; font-weight: 700; font-size: 0.85rem; background: #f7fafc; }
+
+/* 松尾先生まとめボックス */
+.matsuo-box { background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 28px; max-width: 480px; }
+.matsuo-box h2 { font-size: 0.9rem; color: #718096; font-weight: 700; margin-bottom: 10px; }
+.matsuo-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+.matsuo-table th { color: #718096; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.matsuo-table th.r { text-align: right; }
+.matsuo-table td { padding: 5px 8px; border-bottom: 1px solid #f7fafc; }
+.matsuo-table td.r { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.matsuo-table tr:last-child td { border-bottom: none; }
+.matsuo-total td { border-top: 2px solid #e2e8f0 !important; font-weight: 700; background: #f7fafc; }
+.note-text { font-size: 0.75rem; color: #a0aec0; margin-top: 8px; }
+
+.unit-note { text-align: center; font-size: 0.75rem; color: #a0aec0; margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>専科教員　学年別科目一覧</h1>
+<p class="subtitle">2026年度</p>
+
+<!-- 松尾先生まとめ -->
+<div class="matsuo-box">
+  <h2>松尾先生（準常勤）オイリュトミー コマ数</h2>
+  <table class="matsuo-table">
+    <thead><tr><th>学年</th><th class="r">コマ数</th></tr></thead>
+    <tbody>
+      <tr><td>4年</td><td class="r">27</td></tr>
+      <tr><td>5年</td><td class="r">57</td></tr>
+      <tr><td>7年</td><td class="r">58</td></tr>
+      <tr class="matsuo-total"><td>合計</td><td class="r">142</td></tr>
+    </tbody>
+  </table>
+  <p class="note-text">※準常勤教員のため、下記の各学年コマ数合計には含みません。</p>
+</div>
+
+<!-- 初等部 -->
+<div class="section-group">
+  <div class="section-label shoto">初等部（1〜6年）</div>
+  <div class="grade-grid">
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">1年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">27</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">51</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">55</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">24</td></tr>
+          <tr><td><span class="subject-badge">音楽</span></td><td class="koma-num">28</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">185</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">2年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">30</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">54</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">60</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">58</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">202</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">3年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">27</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">61</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">58</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">174</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">4年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">58</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">60</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">58</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">58</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">262</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">5年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">彫塑</span></td><td class="koma-num">55</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">57</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">31</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">57</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">58</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">286</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card shoto-card">
+      <div class="grade-header">6年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">アンサンブル</span></td><td class="koma-num">27</td></tr>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">55</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">59</td></tr>
+          <tr><td><span class="subject-badge">彫塑</span></td><td class="koma-num">58</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">59</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">58</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">87</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">83</td></tr>
+          <tr><td><span class="subject-badge">音楽</span></td><td class="koma-num">30</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">516</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- 中等部 -->
+<div class="section-group">
+  <div class="section-label chuto">中等部（7〜8年）</div>
+  <div class="grade-grid">
+
+    <div class="grade-card chuto-card">
+      <div class="grade-header">7年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">アンサンブル</span></td><td class="koma-num">29</td></tr>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">29</td></tr>
+          <tr><td><span class="subject-badge">園芸</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">彫塑</span></td><td class="koma-num">62</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">62</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">58</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">88</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">87</td></tr>
+          <tr><td><span class="subject-badge">音楽</span></td><td class="koma-num">30</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">501</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card chuto-card">
+      <div class="grade-header">8年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">31</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">25</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">56</td></tr>
+          <tr><td><span class="subject-badge">書道</span></td><td class="koma-num">61</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">88</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">85</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">346</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- 高等部 -->
+<div class="section-group">
+  <div class="section-label koto">高等部（9〜12年）</div>
+  <div class="grade-grid">
+
+    <div class="grade-card koto-card">
+      <div class="grade-header">9年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">PC</span></td><td class="koma-num">30</td></tr>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">25</td></tr>
+          <tr><td><span class="subject-badge">国語</span></td><td class="koma-num">60</td></tr>
+          <tr><td><span class="subject-badge">手仕事</span></td><td class="koma-num">90</td></tr>
+          <tr><td><span class="subject-badge">数学</span></td><td class="koma-num">60</td></tr>
+          <tr><td><span class="subject-badge">木工</span></td><td class="koma-num">56</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">111</td></tr>
+          <tr><td><span class="subject-badge">製本／美術</span></td><td class="koma-num">54</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">55</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">569</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card koto-card">
+      <div class="grade-header">10・11年生（合同）</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">PC</span></td><td class="koma-num">31</td></tr>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">28</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">50</td></tr>
+          <tr><td><span class="subject-badge">国語</span></td><td class="koma-num">62</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">118</td></tr>
+          <tr><td><span class="subject-badge">製本／美術</span></td><td class="koma-num">59</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">57</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">405</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grade-card koto-card">
+      <div class="grade-header">12年生</div>
+      <table class="subject-table">
+        <thead><tr><th>科目</th><th class="koma-col">コマ数</th></tr></thead>
+        <tbody>
+          <tr><td><span class="subject-badge">伴奏</span></td><td class="koma-num">54</td></tr>
+          <tr><td><span class="subject-badge">体育</span></td><td class="koma-num">25</td></tr>
+          <tr><td><span class="subject-badge">数学</span></td><td class="koma-num">50</td></tr>
+          <tr><td><span class="subject-badge">英語</span></td><td class="koma-num">75</td></tr>
+          <tr><td><span class="subject-badge">製本／美術</span></td><td class="koma-num">50</td></tr>
+          <tr><td><span class="subject-badge">韓国語</span></td><td class="koma-num">55</td></tr>
+          <tr class="total-row"><td>合計</td><td class="koma-num">309</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<p class="unit-note">各学年の合計は松尾先生（準常勤）分を除いています。</p>
+</body>
+</html>
