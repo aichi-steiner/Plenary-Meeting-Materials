@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>保護者駐車場 空き時間表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: day tabs → time slider + site map (what's free right now) → full-day timeline per space */
+:root{
+  --bg:#f6f8f4; --surface:#ffffff; --fg:#1f2a22; --muted:#66705f; --line:#dde3d6;
+  --free:#3f9a5b; --free-soft:#dff0e2; --free-ink:#14492a;
+  --busy:#d9dbd5; --busy-ink:#7b7f76; --other:#eceee8; --accent:#2f6f8f; --now:#d2553a;
+  --f-head:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Noto Sans JP",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a16; --surface:#1c241f; --fg:#e6ece4; --muted:#9aa595; --line:#2e3830;
+  --free:#4fb56d; --free-soft:#1f3a27; --free-ink:#c9f0d3;
+  --busy:#2c322d; --busy-ink:#8c948a; --other:#222a24; --accent:#6fb3d4; --now:#f07a5c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a16; --surface:#1c241f; --fg:#e6ece4; --muted:#9aa595; --line:#2e3830;
+  --free:#4fb56d; --free-soft:#1f3a27; --free-ink:#c9f0d3;
+  --busy:#2c322d; --busy-ink:#8c948a; --other:#222a24; --accent:#6fb3d4; --now:#f07a5c; color-scheme:dark}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--f-head);font-size:1.6rem;margin:0;text-wrap:balance}
+h2{font-family:var(--f-head);font-size:1.15rem;margin:0 0 10px}
+.sub{color:var(--muted);margin:4px 0 0;font-size:.92rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:700 1.05rem var(--f-head);padding:8px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tabs button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.now-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+@media (max-width:760px){.now-grid{grid-template-columns:1fr}}
+.clock{font:700 2.4rem var(--f-head);font-variant-numeric:tabular-nums;line-height:1}
+.slider{width:100%;margin:12px 0 4px;accent-color:var(--now)}
+.ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
+.avail{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.avail .row{display:flex;gap:10px;align-items:baseline}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:2.1em;height:2.1em;border-radius:8px;font:700 1rem var(--f-head);background:var(--free);color:#fff}
+.until{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.none{color:var(--now);font-weight:700}
+/* map */
+.map{display:flex;flex-direction:column;gap:8px}
+.side{font-size:.8rem;color:var(--muted);letter-spacing:.08em}
+.lot{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.lot.s{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cell{border-radius:8px;padding:8px 2px;text-align:center;font-size:.78rem;background:var(--other);color:var(--muted);border:1px dashed var(--line)}
+.cell.sp{font:700 1.1rem var(--f-head);border:2px solid transparent;background:var(--busy);color:var(--busy-ink)}
+.cell.sp.ok{background:var(--free);color:#fff}
+.cell.sp small{display:block;font:500 .7rem var(--f-body);font-variant-numeric:tabular-nums}
+.road{text-align:center;font-size:.78rem;color:var(--muted);border-block:2px dotted var(--line);padding:4px}
+/* timeline */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-bottom:10px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.scroll{overflow-x:auto}
+.tl{min-width:720px;display:grid;grid-template-columns:52px 1fr;row-gap:5px}
+.axis{position:relative;height:20px;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.axis span{position:absolute;transform:translateX(-50%)}
+.lab{font:700 1.05rem var(--f-head);display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:8px}
+.track{position:relative;height:38px;background:var(--busy);border-radius:8px;overflow:hidden;
+  background-image:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),var(--line) calc(10% - 1px) 10%)}
+.seg{position:absolute;top:3px;bottom:3px;border-radius:6px;background:var(--free);color:#fff;font-size:.74rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
+.nowline{position:absolute;top:0;bottom:0;width:2px;background:var(--now);pointer-events:none}
+.notes{font-size:.88rem;color:var(--muted);margin:0;padding-left:1.2em}
+.notes li{margin:2px 0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>保護者駐車場 空き時間表</h1>
+    <p class="sub">2026年10月12日〜 ／ 緑の時間帯に、緑の区画へ駐車できます（教職員の前後10分は除いています）</p>
+  </header>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <section class="panel now-grid">
+    <div>
+      <h2>時刻を選ぶと、停められる区画がわかります</h2>
+      <div class="clock" id="clock">8:00</div>
+      <input type="range" id="slider" class="slider" min="480" max="1075" step="5" value="480" aria-label="時刻">
+      <div class="ticks"><span>8時</span><span>10時</span><span>12時</span><span>14時</span><span>16時</span><span>18時</span></div>
+      <div class="avail" id="avail"></div>
+    </div>
+    <div class="map" aria-label="駐車場の配置図">
+      <div class="side">北側</div>
+      <div class="lot">
+        <div class="cell">駐輪場</div><div class="cell">森田</div>
+        <div class="cell sp" data-s="A"></div><div class="cell sp" data-s="B"></div><div class="cell sp" data-s="C"></div>
+      </div>
+      <div class="road">通 路</div>
+      <div class="side">南側</div>
+      <div class="lot s">
+        <div class="cell">太田</div><div class="cell">畑中</div><div class="cell sp" data-s="D"></div>
+        <div class="cell">浅倉</div><div class="cell">森</div><div class="cell sp" data-s="E"></div>
+        <div class="cell">今泉</div><div class="cell">堀田</div><div class="cell sp" data-s="F"></div>
+        <div class="cell sp" data-s="1"></div><div class="cell sp" data-s="2"></div><div class="cell sp" data-s="G"></div>
+        <div class="cell">吉川</div><div class="cell sp" data-s="3"></div><div class="cell sp" data-s="4"></div>
+        <div class="cell">竹村</div><div class="cell">横地</div><div class="cell">右田</div>
+      </div>
+      <div class="side">※ 名前の入った区画（点線）は教職員専用です。停めないでください</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 id="tlTitle">一日の空き時間</h2>
+    <div class="legend"><span><i style="background:var(--free)"></i>駐車できる時間</span><span><i style="background:var(--busy)"></i>教職員が使用中（停められません）</span><span><i style="background:var(--now)"></i>選んだ時刻</span></div>
+    <div class="scroll"><div class="tl" id="tl"></div></div>
+  </section>
+
+  <ul class="notes">
+    <li>表示している時間を過ぎての駐車はご遠慮ください。</li>
+    <li>授業準備のため、表の時刻より早く来られる先生もいらっしゃいます。空き時間の終わり間際の駐車は避け、先生が来られたら速やかに移動をお願いします。</li>
+    <li>8:00より前・18:00以降は表の対象外です。</li>
+  </ul>
+</div>
+
+<script>
+const SP=["A","B","C","D","E","F","G","1","2","3","4"];
+const DAYS=["月","火","水","木","金"];
+const ALL=[["8:00","18:00"]];
+const OCC={
+ "月":{A:ALL,B:[["10:35","12:10"],["13:30","16:05"]],C:[["10:35","15:05"]],D:ALL,E:[["10:35","15:55"]],F:[["10:35","12:10"],["13:30","15:55"]],G:[["9:30","12:10"],["13:00","17:00"]],"1":[["13:00","18:00"]],"2":[["13:00","17:30"]],"3":[["13:00","15:20"]],"4":[]},
+ "火":{A:[["8:00","14:00"],["14:20","17:15"]],B:[["10:35","12:10"],["13:00","18:00"]],C:[["8:30","16:00"]],D:ALL,E:[["10:35","11:20"],["13:00","17:00"]],F:[["9:30","12:10"],["13:00","17:30"]],G:[["11:25","14:15"]],"1":[["9:30","15:05"]],"2":[["11:25","14:45"]],"3":[["10:35","14:30"]],"4":[["10:35","14:30"]]},
+ "水":{A:ALL,B:[["10:35","12:10"],["14:20","17:45"]],C:[["9:30","14:15"]],D:ALL,E:[["10:35","12:10"],["13:00","17:00"]],F:[["10:35","12:10"]],G:[["10:35","12:10"],["13:00","17:00"]],"1":[["13:00","18:00"]],"2":[["13:00","17:30"]],"3":[["10:35","14:15"]],"4":[]},
+ "木":{A:ALL,B:[["10:35","12:10"],["13:30","15:35"]],C:[["11:25","14:30"]],D:ALL,E:[["10:35","15:35"]],F:[["10:35","12:10"],["13:10","15:35"]],G:[["9:30","14:15"]],"1":[["13:00","18:00"]],"2":[["13:00","17:30"]],"3":[["11:25","15:30"]],"4":[["13:15","14:45"]]},
+ "金":{A:[["10:35","12:00"],["13:30","17:00"]],B:[["10:35","12:10"],["14:20","17:15"]],C:[["11:25","15:55"]],D:[["10:35","12:10"],["13:10","15:05"]],E:[["13:00","17:00"]],F:[["8:40","12:10"],["13:00","17:00"]],G:[["10:35","14:15"]],"1":[["13:00","18:00"]],"2":[["13:00","17:30"]],"3":[],"4":ALL}
+};
+const S=480,E=1080,BUF=10;
+const m=t=>{const[h,mm]=t.split(":");return +h*60+ +mm};
+const f=v=>Math.floor(v/60)+":"+String(v%60).padStart(2,"0");
+function freeOf(occ){
+  const o=occ.map(([a,b])=>[m(a),m(b)]).sort((x,y)=>x[0]-y[0]);
+  let cur=S,out=[];
+  for(const[a,b]of o){if(a>cur)out.push([cur,a]);cur=Math.max(cur,b)}
+  if(cur<E)out.push([cur,E]);
+  return out.map(([a,b])=>[a===S?a:a+BUF,b===E?b:b-BUF]).filter(([a,b])=>b-a>=10);
+}
+const FREE={};DAYS.forEach(d=>{FREE[d]={};SP.forEach(s=>FREE[d][s]=freeOf(OCC[d][s]))});
+
+let day=(()=>{const w=new Date().getDay();return w>=1&&w<=5?DAYS[w-1]:"月"})();
+const slider=document.getElementById("slider");
+try{const v=localStorage.getItem("pk-time");if(v)slider.value=v}catch(e){}
+
+const tabs=document.getElementById("tabs");
+DAYS.forEach(d=>{const b=document.createElement("button");b.textContent=d+"曜日";b.setAttribute("role","tab");b.dataset.d=d;b.onclick=()=>{day=d;render()};tabs.appendChild(b)});
+
+const pct=v=>((v-S)/(E-S)*100)+"%";
+const lbl=([a,b])=>(a===S?"〜":f(a)+"〜")+(b===E?(a===S?"終日":""):f(b));
+
+function renderTL(){
+  document.getElementById("tlTitle").textContent=day+"曜日の空き時間（区画別）";
+  const tl=document.getElementById("tl");tl.innerHTML="";
+  tl.appendChild(document.createElement("div"));
+  const ax=document.createElement("div");ax.className="axis";
+  for(let h=8;h<=18;h++){const s=document.createElement("span");s.style.left=pct(h*60);s.textContent=h+":00";if(h===8)s.style.transform="none";if(h===18)s.style.transform="translateX(-100%)";ax.appendChild(s)}
+  tl.appendChild(ax);
+  SP.forEach(s=>{
+    const l=document.createElement("div");l.className="lab";l.textContent=s;tl.appendChild(l);
+    const t=document.createElement("div");t.className="track";
+    FREE[day][s].forEach(iv=>{const g=document.createElement("div");g.className="seg";g.style.left=pct(iv[0]);g.style.width=((iv[1]-iv[0])/(E-S)*100)+"%";
+      const txt=(iv[0]===S&&iv[1]===E)?"終日OK":f(iv[0])+"–"+f(iv[1]);g.title=s+"："+txt;if(iv[1]-iv[0]>=55)g.textContent=txt;else if(iv[1]-iv[0]>=30)g.textContent=f(iv[0]);t.appendChild(g)});
+    const n=document.createElement("div");n.className="nowline";n.style.left=pct(+slider.value);t.appendChild(n);
+    tl.appendChild(t);
+  });
+}
+function renderNow(){
+  const v=+slider.value;document.getElementById("clock").textContent=day+" "+f(v);
+  try{localStorage.setItem("pk-time",v)}catch(e){}
+  const ok=[];
+  SP.forEach(s=>{const iv=FREE[day][s].find(([a,b])=>v>=a&&v<b);const c=document.querySelector('.cell.sp[data-s="'+s+'"]');
+    c.classList.toggle("ok",!!iv);c.innerHTML=s+(iv?"<small>"+(iv[1]===E?"18時まで":f(iv[1])+"まで")+"</small>":"<small>使用中</small>");
+    if(iv)ok.push([s,iv])});
+  ok.sort((x,y)=>y[1][1]-x[1][1]);
+  const av=document.getElementById("avail");
+  av.innerHTML=ok.length?ok.map(([s,iv])=>'<div class="row"><span class="chip">'+s+'</span><span class="until">'+(iv[1]===E?"18:00まで停められます":f(iv[1])+"まで停められます")+'</span></div>').join(""):'<div class="none">この時刻に停められる区画はありません</div>';
+  document.querySelectorAll(".nowline").forEach(n=>n.style.left=pct(v));
+}
+function render(){
+  tabs.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.d===day));
+  renderTL();renderNow();
+}
+slider.addEventListener("input",renderNow);
+render();
+</script>
+
+</body>
+</html>
